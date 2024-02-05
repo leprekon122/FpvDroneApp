@@ -1,0 +1,139 @@
+{%extends 'FpvAppMain/layout_main.html'%}
+
+{%block title%}Lessons{%endblock%}
+
+{%block content%}
+{%if flag == 0%}
+<div class="lessons-main" xmlns="http://www.w3.org/1999/html">
+
+    <div class="lesson_filters">
+        {%if filter == 1%}
+        <form method="get">
+            <div class="name_of_filter">
+                <button class="btn btn-dark" style="background-color: black" type="submit" name="remove_filter"
+                        value="remove_filter">{{filter_name}}
+                </button>
+            </div>
+        </form>
+        {%endif%}
+        <div class="find_by_title">
+            <div class="find_by_title_title">
+                <h5 class="text-light">find by titles</h5>
+            </div>
+            <form method="get">
+                <input class="form-control" name="find_by_title">
+                <br>
+                <button class="btn btn-warning" type="submit" name="search_by_title" value="search_by_title">search
+                </button>
+            </form>
+        </div>
+
+    </div>
+    <div class="topics_main">
+        {%for el in model%}
+        <div class="topics">
+            <form method="get">
+                <div class="title">
+                    <button class="btn btn-success" type="submit" name="detail" value="{{el.id}}" style="background-color: transparent;">{{el.tittle}}</button>
+                </div>
+            </form>
+            <div class="date_and_tags">
+                <form method="get">
+                    <div class="tags">
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_1" value="{{el.tag_1}}" style="background-color: transparent;">{{el.tag_1}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_2" value="{{el.tag_2}}" style="background-color: transparent;">{{el.tag_2}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_3" value="{{el.tag_3}}" style="background-color: transparent;">{{el.tag_3}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_4" value="{{el.tag_4}}" style="background-color: transparent;">{{el.tag_4}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_5" value="{{el.tag_5}}" style="background-color: transparent;">{{el.tag_5}}</button>
+                    </div>
+                </form>
+                <div class="date">
+                    <h5 class="text-light">{{el.add_date}}</h5>
+                </div>
+            </div>
+        </div>
+        </br>
+        {%endfor%}
+    </div>
+</div>
+{%else%}
+<div class="container-fluid detail_container">
+    <br>
+    <div class="detail_title">
+        <h5 class="text-light">{{model.0.tittle}}</h5>
+    </div>
+    <br>
+    {%if model.0.video != '' %}
+    <div class="detail_video">
+        <video width="800px" height="400px" controls>
+            <source src="media/{{model.0.video}}" type="video/mp4">
+        </video>
+    </div>
+    {%endif%}
+    <br>
+    {%if model.0.pic != ''%}
+    <div class="detail_pic">
+        <img src="media/{{model.0.pic}}" width="800px" height="400px">
+    </div>
+    {%endif%}
+    {%if model.0.text != ''%}
+    <div class="container detail-text">
+        <p class="text-light">{{model.0.text}}</p>
+    </div>
+    {%endif%}
+    {%if model.0.pic_1 != ''%}
+    <div class="detail_pic">
+        <img src="media/{{model.0.pic_1}}" width="800px" height="400px">
+    </div>
+    {%endif%}
+    {%if model.0.text_1 != ''%}
+    <div class="container detail-text">
+        <p class="text-light">{{model.0.text_1}}</p>
+    </div>
+    {%endif%}
+
+    {%if model.0.pic_2 != ''%}
+    <div class="detail_pic">
+        <img src="media/{{model.0.pic_2}}" width="800px" height="400px">
+    </div>
+    {%endif%}
+    {%if model.0.text_2 != ''%}
+    <div class="container detail-text">
+        <p class="text-light">{{model.0.text_2}}</p>
+    </div>
+    {%endif%}
+
+    {%if model.0.pic_3 != ''%}
+    <div class="detail_pic">
+        <img src="media/{{model.0.pic_3}}" width="800px" height="400px">
+    </div>
+    {%endif%}
+    {%if model.0.text_3 != ''%}
+    <div class="container detail-text">
+        <p class="text-light">{{model.0.text_3}}</p>
+    </div>
+    {%endif%}
+
+
+    {%if model.0.pic_4 != ''%}
+    <div class="detail_pic">
+        <img src="media/{{model.0.pic_4}}" width="800px" height="400px">
+    </div>
+    {%endif%}
+    {%if model.0.text_4 != ''%}
+    <div class="container detail-text">
+        <p>{{model.0.text_4}}</p>
+    </div>
+    {%endif%}
+
+</div>
+{%endif%}
+
+{%if letters_status == 1%}
+<script>
+        $('#letters').modal('show')
+</script>
+{%endif%}
+
+<script src="/static/FpvAppMain/js/lessons_page.js"></script>
+{%endblock%}

@@ -1,0 +1,16 @@
+{%extends 'FpvAppMain/layout.html'%}
+
+{%block title%}Login page{%endblock%}
+
+{%block content%}
+<div class="container">
+    <form method="post">
+        {%csrf_token%}
+        <div class="login_form">
+            <input class="form-control" type="text" name="username">
+            <input class="form-control" type="password" name="password">
+            <button class="btn btn-success" type="submit">login</button>
+        </div>
+    </form>
+</div>
+{%endblock%}

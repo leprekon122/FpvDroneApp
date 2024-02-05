@@ -1,0 +1,282 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}{%endblock%}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{%static 'FpvAppMain/css/main.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel=icon href="{% static 'main_djmil/img/images.png' %}" sizes=16x16 type=image/png>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+            integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+            integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+            crossorigin="anonymous"></script>
+
+    <script type='text/javascript'
+            src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AkuezCwTATSUoOJz6anm2a7b64t-uTcIbVPXE8gxzwMxazjeGZyMFxXPIbbWEhfr'
+            async defer></script>
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark " style="background-color: transparent;">
+    <a class="navbar-brand" href="{% url 'main_page'%}">Fpv Base</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="{% url 'main_page'%}">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="{%url 'lessons_page'%}">Lessons</a>
+            <a class="nav-item nav-link active" data-target="#article" data-toggle="modal" id="article_configurator"
+               style="display: none">Article configurator</a>
+        </div>
+        <div class="navbar-nav tools_panel">
+            <a class="nav-item nav-link" href="" data-target="#letters" data-toggle="modal"><i
+                    class="fa-solid fa-envelope text-danger"></i></a>
+            {%if count_letters != 0%}
+            <div class="round" id="round">{{count_letters}}</div>
+            {%endif%}
+        </div>
+    </div>
+</nav>
+
+<div class="modal" tabindex="-1" role="dialog" id="letters">
+    <div class="modal-dialog modal-xl" role="document" >
+        <div class="modal-content" style="background-image:url({% static 'FpvAppMain/img/bg_!.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
+            <div class="modal-header">
+                <h5 class="modal-title text-light">Letters panel</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body article-body modal_letters">
+                <div class="unread">
+                    {%for el in letters_model%}
+                    {%if el.status == 'unread'%}
+                    <form method="get">
+                        <div class="alert alert-success text-light" style="background-color: transparent;">
+                            <h5>Title: {{el.title}}</h5>
+                            {{el.text}}
+                            <button type="submit" class="close" name="read" value="{{el.id}}"><i
+                                    class="fa-brands fa-readme text-success"></i></button>
+                        </div>
+                    </form>
+                    {%else%}
+                    <div class="alert alert-warning text-light" style="background-color: transparent;">
+                        <h5>Title: {{el.title}}</h5>
+                        {{el.text}}
+                    </div>
+                    {%endif%}
+                    {%endfor%}
+                </div>
+                <div class="send_and_write">
+                    <div class="send">
+
+                    </div>
+                    <form method="post">
+                        {%csrf_token%}
+                        <div class="write">
+                            <input class="form-control" type="text" placeholder="title" name="title_letters">
+                            <br>
+                            <textarea class="form-control" rows="6" name="text_letters" placeholder="message">
+                            </textarea>
+                            <br>
+                            <input type="text" class="form-control" name="username" placeholder="username">
+                            <br>
+                            <button class="btn btn-success" type="submit" name="send_letters">send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="article">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content" style="background-image:url({% static 'FpvAppMain/img/bg_!.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
+            <div class="modal-header">
+                <h5 class="modal-title text-light">Article configurator</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="modal-body article-body">
+                    <label for="title" class="text-light">Title article</label>
+                    <input class="form-control" type="text" name="title" id="title">
+                    <div class="num_of_photo">
+                        <div class="num_of_photo_title">
+                            <p>quan of photo</p>
+                        </div>
+                        <div class="form-check" id="block_photo_1">
+                            <input class="form-check-input" type="checkbox" name="photo" value="1" id="photo_1"
+                                   onclick="show_photo('photo_1')">
+                            <label class="form-check-label text-light" for="photo_1">
+                                1
+                            </label>
+                        </div>
+                        <div class="form-check" id="block_photo_2">
+                            <input class="form-check-input" type="checkbox" name="photo" value="2" id="photo_2"
+                                   onclick="show_photo('photo_2')">
+                            <label class="form-check-label text-light" for="photo_2">
+                                2
+                            </label>
+                        </div>
+                        <div class="form-check" id="block_photo_3">
+                            <input class="form-check-input" type="checkbox" name="photo" value="3" id="photo_3"
+                                   onclick="show_photo('photo_3')">
+                            <label class="form-check-label text-light" for="photo_3">
+                                3
+                            </label>
+                        </div>
+                        <div class="form-check" id="block_photo_4">
+                            <input class="form-check-input" type="checkbox" name="photo" value="4" id="photo_4"
+                                   onclick="show_photo('photo_4')">
+                            <label class="form-check-label text-light" for="photo_4">
+                                4
+                            </label>
+                        </div>
+                        <div class="form-check" id="block_photo_5">
+                            <input class="form-check-input" type="checkbox" name="photo" value="5" id="photo_5"
+                                   onclick="show_photo('photo_5')">
+                            <label class="form-check-label text-light" for="photo_5">
+                                5
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pic_div">
+                        <div class="pic_block_1">
+                            <div class="pic" id="pic_block" style="display: none">
+                                <label for="pic" class="text-light">pic</label>
+                                <input type="file" name="pic_1" id="pic">
+                            </div>
+                            <div class="pic_1" id="pic_block_2" style="display: none">
+                                <label for="pic_1" class="text-light">pic_1</label>
+                                <input type="file" name="pic_2" id="pic_1">
+                            </div>
+                        </div>
+                        <div class="pic_block_2">
+                            <div class="pic_2" id="pic_block_3" style="display: none">
+                                <label for="pic_2" class="text-light">pic_2</label>
+                                <input type="file" name="pic_3" id="pic_2">
+                            </div>
+                            <div class="pic_3" id="pic_block_4" style="display: none">
+                                <label for="title" class="text-light">pic_3</label>
+                                <input type="file" name="pic_4" id="pic_3">
+                            </div>
+                        </div>
+                        <div class="pic_block_3">
+                            <div class="pic_4" id="pic_block_5" style="display: none">
+                                <label for="pic_4" class="text-light">pic_4</label>
+                                <input type="file" name="pic_5" id="pic_4">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="add_date">
+                        <label for="add_date" class="text-light">date</label>
+                        <input class="form-control" type="date" name="add_date" id="add_date">
+                    </div>
+                    <div class="add_video">
+                        <input type="file" name="video">
+                    </div>
+                    <div class="add_text">
+                        <label for="text" class="text-light">text</label>
+                        <input class="form-control" type="text" name="text" id="text" style="height: 300px">
+                        <!--<label for="text_1">text_1</label>
+                        <input class="form-control" type="text" name="text" id="text_1" style="height: 300px">
+                        <label for="text_2">text_2</label>
+                        <input class="form-control" type="text" name="text_2" id="text_2" style="height: 300px">
+                        <label for="text_3">text_3</label>
+                        <input class="form-control" type="text" name="text_3" id="text_3" style="height: 300px">
+                        <label for="text_4">text_4</label>
+                        <input class="form-control" type="text" name="text_4" id="text_4" style="height: 300px">
+                        <label for="text_5">text_5</label>
+                        <input class="form-control" type="text" name="text_5" id="text_5" style="height: 300px">
+                        <label for="text_6">text_6</label>
+                        <input class="form-control" type="text" name="text_6" id="text_6" style="height: 300px"> -->
+                    </div>
+                    <div class="choosing tags">
+                        <label for="tag_1" class="text-light">tag_1</label>
+                        <select class="form-control" name="tag_1" id="tag_1">
+                            <option value="None"></option>
+                            <option value="repair">repair</option>
+                            <option value="video">video</option>
+                            <option value="flying">flying</option>
+                            <option value="education">education</option>
+                            <option value="inventing">inventing</option>
+                        </select>
+
+                        <label for="tag_2" class="text-light">tag_2</label>
+                        <select class="form-control" name="tag_2" id="tag_2">
+                            <option value="None"></option>
+                            <option value="repair">repair</option>
+                            <option value="video">video</option>
+                            <option value="flying">flying</option>
+                            <option value="education">education</option>
+                            <option value="inventing">inventing</option>
+                        </select>
+
+                        <label for="tag_3" class="text-light">tag_3</label>
+                        <select class="form-control" name="tag_3" id="tag_3">
+                            <option value="None"></option>
+                            <option value="repair">repair</option>
+                            <option value="video">video</option>
+                            <option value="flying">flying</option>
+                            <option value="education">education</option>
+                            <option value="inventing">inventing</option>
+                        </select>
+
+                        <label for="tag_4" class="text-light">tag_4</label>
+                        <select class="form-control" name="tag_4" id="tag_4">
+                            <option value="None"></option>
+                            <option value="repair">repair</option>
+                            <option value="video">video</option>
+                            <option value="flying">flying</option>
+                            <option value="education">education</option>
+                            <option value="inventing">inventing</option>
+                        </select>
+
+                        <label for="tag_5" class="text-light">tag_5</label>
+                        <select class="form-control" name="tag_5" id="tag_5">
+                            <option value="None"></option>
+                            <option value="repair">repair</option>
+                            <option value="video">video</option>
+                            <option value="flying">flying</option>
+                            <option value="education">education</option>
+                            <option value="inventing">inventing</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" style="width: 100%; background-color: transparent;">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<body style="background-image:url({% static 'FpvAppMain/img/bg_!.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
+{%block content%}
+{%endblock%}
+</body>
+<script src="/static/FpvAppMain/js/layout_main.js"></script>
+</html>
