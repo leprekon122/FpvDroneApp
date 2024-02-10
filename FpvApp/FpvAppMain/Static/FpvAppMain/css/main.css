@@ -12,6 +12,7 @@ body {background-color: black;
                  transition-duration: .5s;
                  }
 
+
 /*login form*/
 
 .container {
@@ -87,7 +88,7 @@ body {background-color: black;
 .lesson_filters {width: 30%;
                  height: 90vh;
                  overflow: auto;
-                 box-shadow: 5px 5px 5px red;
+                 filter: drop-shadow(16px 16px 20px red);
                  padding: 2%;
                     }
 .find_by_title {border-bottom: 1px solid yellow;
@@ -110,7 +111,8 @@ body {background-color: black;
 .topics {
 
          height: 20vh;
-         border: 1px solid yellow;
+
+         box-shadow: 10px 5px 5px yellow;
          padding: 2%;
          border-radius: .5%;
 }
@@ -118,6 +120,9 @@ body {background-color: black;
 .title {display: flex;
         justify-content: center;
         }
+
+.title_btn:hover {transform: scale(1.5);
+}
 
 .date_and_tags {
                 display: flex;
@@ -179,6 +184,60 @@ body {background-color: black;
                justify-content: center;
                 }
 /*===========================*/
+
+/* settings for like, author and dislike on lessons page */
+.like_and_author {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: row;
+                  padding-top: 1%;
+}
+
+.like_main {
+            display: flex;
+            flex-direction: row;
+            width: 5%;
+            justify-content: space-between;
+            padding-left: 1%;
+
+}
+.round_like {
+             width: 14px;
+             height: 14px;
+             border-radius: 50%;
+             background-color: orange;
+             position: relative;
+             top: -27px;
+             left: 10px;
+             font-size: 11px;
+             display: flex;
+             justify-content: center;
+}
+
+.round_dislike {
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          background-color: orange;
+          position: relative;
+          top: -27px;
+          left: 10px;
+          font-size: 11px;
+          display: flex;
+          justify-content: center;
+}
+/* ======================== */
+
+
+/* settings for article modal */
+.choosing_tags {
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                flex-direction: row;
+                flex-wrap: wrap;
+}
+/* ========================*/
 
 /* style for main page */
 .main_block_cls {

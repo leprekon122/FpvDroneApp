@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'FpvApp.wsgi.application'
 DATABASES = {
  'default': {
    'ENGINE': 'django.db.backends.postgresql',
-   'NAME': os.getenv("fpv_db"),
+   'NAME': os.getenv('fpvdb'),
    'USER': os.getenv('user_db'),
    'PASSWORD': os.getenv('password_db'),
    'HOST': os.getenv('db_host'),

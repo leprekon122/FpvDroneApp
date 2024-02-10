@@ -4,7 +4,7 @@
 
 {%block content%}
 {%if flag == 0%}
-<div class="lessons-main" xmlns="http://www.w3.org/1999/html">
+<div class="lessons-main" xmlns="http://www.w3.org/1999/html" style="position:fixed">
 
     <div class="lesson_filters">
         {%if filter == 1%}
@@ -23,7 +23,7 @@
             <form method="get">
                 <input class="form-control" name="find_by_title">
                 <br>
-                <button class="btn btn-warning" type="submit" name="search_by_title" value="search_by_title">search
+                <button class="btn btn-warning" type="submit"  name="search_by_title" value="search_by_title">search
                 </button>
             </form>
         </div>
@@ -34,17 +34,19 @@
         <div class="topics">
             <form method="get">
                 <div class="title">
-                    <button class="btn btn-success" type="submit" name="detail" value="{{el.id}}" style="background-color: transparent;">{{el.tittle}}</button>
+                    <button class="btn btn-success title_btn" type="submit" name="detail" value="{{el.id}}"
+                            style="background-color: transparent; border: none">{{el.tittle}}
+                    </button>
                 </div>
             </form>
             <div class="date_and_tags">
                 <form method="get">
                     <div class="tags">
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_1" value="{{el.tag_1}}" style="background-color: transparent;">{{el.tag_1}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_2" value="{{el.tag_2}}" style="background-color: transparent;">{{el.tag_2}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_3" value="{{el.tag_3}}" style="background-color: transparent;">{{el.tag_3}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_4" value="{{el.tag_4}}" style="background-color: transparent;">{{el.tag_4}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_5" value="{{el.tag_5}}" style="background-color: transparent;">{{el.tag_5}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_1" value="{{el.tag_1}}" style="background-color: transparent; border: none">{{el.tag_1}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_2" value="{{el.tag_2}}" style="background-color: transparent; border: none">{{el.tag_2}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_3" value="{{el.tag_3}}" style="background-color: transparent; border: none">{{el.tag_3}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_4" value="{{el.tag_4}}" style="background-color: transparent; border: none">{{el.tag_4}}</button>
+                        <button class="btn btn-warning tag text-light" type="submit" name="tag_5" value="{{el.tag_5}}" style="background-color: transparent; border: none">{{el.tag_5}}</button>
                     </div>
                 </form>
                 <div class="date">
@@ -57,7 +59,36 @@
     </div>
 </div>
 {%else%}
-<div class="container-fluid detail_container">
+<div class="container-fluid detail_container" >
+    <div class="like_and_author">
+        <div class="author">
+            <p class="text-light">author: {{model.0.author}}</p>
+        </div>
+        <div class="like_main">
+            <form method="get">
+                <div class="like">
+                    <button id="btn_like" style="background: transparent; border:none" name="like"
+                            value="{{model.0.like}} {{model.0.id}}"
+                            type="submit"><i
+                            class="fa-solid fa-heart text-success"></i>
+                    </button>
+                    <div class="round_like" onclick="like()">
+                        <span id="like">{{model.0.like}}</span>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="dislike">
+                <i class="fa-solid fa-thumbs-down text-danger"></i>
+                <div class="round_dislike">
+                    <span id="dislike">{{model.0.dislike}}</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
     <br>
     <div class="detail_title">
         <h5 class="text-light">{{model.0.tittle}}</h5>
@@ -76,7 +107,8 @@
         <img src="media/{{model.0.pic}}" width="800px" height="400px">
     </div>
     {%endif%}
-    {%if model.0.text != ''%}
+    <br>
+    {%if model.0.text != None %}
     <div class="container detail-text">
         <p class="text-light">{{model.0.text}}</p>
     </div>
@@ -86,7 +118,8 @@
         <img src="media/{{model.0.pic_1}}" width="800px" height="400px">
     </div>
     {%endif%}
-    {%if model.0.text_1 != ''%}
+    <br>
+    {%if model.0.text_1 != None%}
     <div class="container detail-text">
         <p class="text-light">{{model.0.text_1}}</p>
     </div>
@@ -97,7 +130,8 @@
         <img src="media/{{model.0.pic_2}}" width="800px" height="400px">
     </div>
     {%endif%}
-    {%if model.0.text_2 != ''%}
+    <br>
+    {%if model.0.text_2 != None%}
     <div class="container detail-text">
         <p class="text-light">{{model.0.text_2}}</p>
     </div>
@@ -108,7 +142,8 @@
         <img src="media/{{model.0.pic_3}}" width="800px" height="400px">
     </div>
     {%endif%}
-    {%if model.0.text_3 != ''%}
+    <br>
+    {%if model.0.text_3 != None%}
     <div class="container detail-text">
         <p class="text-light">{{model.0.text_3}}</p>
     </div>
@@ -120,7 +155,8 @@
         <img src="media/{{model.0.pic_4}}" width="800px" height="400px">
     </div>
     {%endif%}
-    {%if model.0.text_4 != ''%}
+    <br>
+    {%if model.0.text_4 != None%}
     <div class="container detail-text">
         <p>{{model.0.text_4}}</p>
     </div>
@@ -132,6 +168,14 @@
 {%if letters_status == 1%}
 <script>
         $('#letters').modal('show')
+
+
+
+
+
+
+
+
 </script>
 {%endif%}
 

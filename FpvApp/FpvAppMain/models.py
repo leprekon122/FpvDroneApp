@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class TagsModel(models.Model):
     """Models for list of tags for topics"""
+    objects = None
     list_of_tags = (("repair", "repair"),
                     ("video", "video"),
                     ("flying", "flying"),
@@ -44,6 +45,9 @@ class LessonTopics(models.Model):
     pic_6 = models.ImageField(null=True, blank=True, upload_to='pic/')
     add_date = models.DateTimeField(auto_now=True)
     video = models.FileField(null=True, blank=True, upload_to="video")
+    author = models.CharField(max_length=255, null=True, blank=True)
+    like = models.IntegerField(null=True, blank=True, default=0)
+    dislike = models.IntegerField(null=True, blank=True, default=0)
     text = models.TextField(null=True, blank=True)
     text_1 = models.TextField(null=True, blank=True)
     text_2 = models.TextField(null=True, blank=True)
@@ -67,6 +71,7 @@ class LessonTopics(models.Model):
 class Letters(models.Model):
     """class for letters"""
 
+    objects = None
     status = (("unread", "unread"),
               ("read", "read")
               )
@@ -75,6 +80,7 @@ class Letters(models.Model):
     text = models.TextField(null=True, blank=True)
     destination = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, choices=status, default="unread")
+    whose = models.CharField(null=True, blank=True, max_length=255)
 
     class Meta:  # pylint: disable=too-few-public-methods
         """class for choosing name of table"""

@@ -41,10 +41,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'main_page'%}">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link active" href="{%url 'lessons_page'%}">Lessons</a>
+            <a class="nav-item nav-link active" href="{% url 'main_page'%}" >Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="{%url 'lessons_page'%}" >Lessons</a>
             <a class="nav-item nav-link active" data-target="#article" data-toggle="modal" id="article_configurator"
-               style="display: none">Article configurator</a>
+               style="display: none;">Article configurator</a>
         </div>
         <div class="navbar-nav tools_panel">
             <a class="nav-item nav-link" href="" data-target="#letters" data-toggle="modal"><i
@@ -57,8 +57,9 @@
 </nav>
 
 <div class="modal" tabindex="-1" role="dialog" id="letters">
-    <div class="modal-dialog modal-xl" role="document" >
-        <div class="modal-content" style="background-image:url({% static 'FpvAppMain/img/bg_!.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content"
+             style="background-image:url({% static 'FpvAppMain/img/bg.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
             <div class="modal-header">
                 <h5 class="modal-title text-light">Letters panel</h5>
                 <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
@@ -72,6 +73,7 @@
                     <form method="get">
                         <div class="alert alert-success text-light" style="background-color: transparent;">
                             <h5>Title: {{el.title}}</h5>
+                            <p>from: {{el.whose}}</p>
                             {{el.text}}
                             <button type="submit" class="close" name="read" value="{{el.id}}"><i
                                     class="fa-brands fa-readme text-success"></i></button>
@@ -80,6 +82,7 @@
                     {%else%}
                     <div class="alert alert-warning text-light" style="background-color: transparent;">
                         <h5>Title: {{el.title}}</h5>
+                        <p>from: {{el.whose}}</p>
                         {{el.text}}
                     </div>
                     {%endif%}
@@ -111,7 +114,8 @@
 
 <div class="modal" tabindex="-1" role="dialog" id="article">
     <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content" style="background-image:url({% static 'FpvAppMain/img/bg_!.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
+        <div class="modal-content"
+             style="background-image:url({% static 'FpvAppMain/img/bg.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
             <div class="modal-header">
                 <h5 class="modal-title text-light">Article configurator</h5>
                 <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
@@ -126,6 +130,13 @@
                     <div class="num_of_photo">
                         <div class="num_of_photo_title">
                             <p>quan of photo</p>
+                        </div>
+                        <div class="form-check" id="block_photo_0">
+                            <input class="form-check-input" type="checkbox" name="photo" value="0" id="photo_0"
+                                   onclick="show_photo('photo_1')">
+                            <label class="form-check-label text-light" for="photo_0">
+                                none photo
+                            </label>
                         </div>
                         <div class="form-check" id="block_photo_1">
                             <input class="form-check-input" type="checkbox" name="photo" value="1" id="photo_1"
@@ -202,79 +213,87 @@
                     <div class="add_text">
                         <label for="text" class="text-light">text</label>
                         <input class="form-control" type="text" name="text" id="text" style="height: 300px">
-                        <!--<label for="text_1">text_1</label>
-                        <input class="form-control" type="text" name="text" id="text_1" style="height: 300px">
-                        <label for="text_2">text_2</label>
+                        <label for="text_1" class="text-light">text_1</label>
+                        <input class="form-control" type="text" name="text_1" id="text_1" style="height: 300px">
+                        <label for="text_2" class="text-light">text_2</label>
                         <input class="form-control" type="text" name="text_2" id="text_2" style="height: 300px">
-                        <label for="text_3">text_3</label>
+                        <label for="text_3" class="text-light">text_3</label>
                         <input class="form-control" type="text" name="text_3" id="text_3" style="height: 300px">
-                        <label for="text_4">text_4</label>
+                        <label for="text_4" class="text-light">text_4</label>
                         <input class="form-control" type="text" name="text_4" id="text_4" style="height: 300px">
-                        <label for="text_5">text_5</label>
-                        <input class="form-control" type="text" name="text_5" id="text_5" style="height: 300px">
-                        <label for="text_6">text_6</label>
-                        <input class="form-control" type="text" name="text_6" id="text_6" style="height: 300px"> -->
                     </div>
-                    <div class="choosing tags">
-                        <label for="tag_1" class="text-light">tag_1</label>
-                        <select class="form-control" name="tag_1" id="tag_1">
-                            <option value="None"></option>
-                            <option value="repair">repair</option>
-                            <option value="video">video</option>
-                            <option value="flying">flying</option>
-                            <option value="education">education</option>
-                            <option value="inventing">inventing</option>
-                        </select>
+                    <div class="choosing_tags">
+                        <div style="width: 20%;">
+                            <label for="tag_1" class="text-light">tag_1</label>
+                            <select class="form-control" name="tag_1" id="tag_1">
+                                <option value="None"></option>
+                                <option value="repair">repair</option>
+                                <option value="video">video</option>
+                                <option value="flying">flying</option>
+                                <option value="education">education</option>
+                                <option value="inventing">inventing</option>
+                            </select>
+                        </div>
 
-                        <label for="tag_2" class="text-light">tag_2</label>
-                        <select class="form-control" name="tag_2" id="tag_2">
-                            <option value="None"></option>
-                            <option value="repair">repair</option>
-                            <option value="video">video</option>
-                            <option value="flying">flying</option>
-                            <option value="education">education</option>
-                            <option value="inventing">inventing</option>
-                        </select>
+                        <div style="width: 20%;">
+                            <label for="tag_2" class="text-light">tag_2</label>
+                            <select class="form-control" name="tag_2" id="tag_2">
+                                <option value="None"></option>
+                                <option value="repair">repair</option>
+                                <option value="video">video</option>
+                                <option value="flying">flying</option>
+                                <option value="education">education</option>
+                                <option value="inventing">inventing</option>
+                            </select>
+                        </div>
 
-                        <label for="tag_3" class="text-light">tag_3</label>
-                        <select class="form-control" name="tag_3" id="tag_3">
-                            <option value="None"></option>
-                            <option value="repair">repair</option>
-                            <option value="video">video</option>
-                            <option value="flying">flying</option>
-                            <option value="education">education</option>
-                            <option value="inventing">inventing</option>
-                        </select>
+                        <div style="width: 20%;">
+                            <label for="tag_3" class="text-light">tag_3</label>
+                            <select class="form-control" name="tag_3" id="tag_3">
+                                <option value="None"></option>
+                                <option value="repair">repair</option>
+                                <option value="video">video</option>
+                                <option value="flying">flying</option>
+                                <option value="education">education</option>
+                                <option value="inventing">inventing</option>
+                            </select>
+                        </div>
 
-                        <label for="tag_4" class="text-light">tag_4</label>
-                        <select class="form-control" name="tag_4" id="tag_4">
-                            <option value="None"></option>
-                            <option value="repair">repair</option>
-                            <option value="video">video</option>
-                            <option value="flying">flying</option>
-                            <option value="education">education</option>
-                            <option value="inventing">inventing</option>
-                        </select>
+                        <div style="width: 20%;">
+                            <label for="tag_4" class="text-light">tag_4</label>
+                            <select class="form-control" name="tag_4" id="tag_4">
+                                <option value="None"></option>
+                                <option value="repair">repair</option>
+                                <option value="video">video</option>
+                                <option value="flying">flying</option>
+                                <option value="education">education</option>
+                                <option value="inventing">inventing</option>
+                            </select>
+                        </div>
 
-                        <label for="tag_5" class="text-light">tag_5</label>
-                        <select class="form-control" name="tag_5" id="tag_5">
-                            <option value="None"></option>
-                            <option value="repair">repair</option>
-                            <option value="video">video</option>
-                            <option value="flying">flying</option>
-                            <option value="education">education</option>
-                            <option value="inventing">inventing</option>
-                        </select>
+                        <div style="width: 20%;">
+                            <label for="tag_5" class="text-light">tag_5</label>
+                            <select class="form-control" name="tag_5" id="tag_5" >
+                                <option value="None"></option>
+                                <option value="repair">repair</option>
+                                <option value="video">video</option>
+                                <option value="flying">flying</option>
+                                <option value="education">education</option>
+                                <option value="inventing">inventing</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" style="width: 100%; background-color: transparent;">Save changes</button>
+                    <button type="submit" class="btn btn-danger" style="width: 100%; background-color: transparent;">
+                        Save changes
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<body style="background-image:url({% static 'FpvAppMain/img/bg_!.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
+<body style="background-image:url({% static 'FpvAppMain/img/bg.avif' %}); background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
 {%block content%}
 {%endblock%}
 </body>

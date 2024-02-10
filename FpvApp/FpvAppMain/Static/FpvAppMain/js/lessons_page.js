@@ -11,4 +11,3 @@ function hide_tags(){
 }
 hide_tags()
 
-

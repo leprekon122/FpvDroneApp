@@ -67,7 +67,7 @@ function show_photo(num){
 
 function first_slide() {
         var text = document.getElementById('second_text')
-        document.body.style.backgroundImage = "url('http://127.0.0.1:8000/static/FpvAppMain/img/bg_!.avif')"
+        document.body.style.backgroundImage = "url('http://127.0.0.1:8000/static/FpvAppMain/img/bg.avif')"
         text.style.display = "none"
 
 }
@@ -168,4 +168,3 @@ function fifth_cube() {
     text.style.justifyContent = "end"
     text.style.padding = "2%"
 }
-
