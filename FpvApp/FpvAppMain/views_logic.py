@@ -91,8 +91,8 @@ class DataForPage:  # pylint: disable=too-few-public-methods
                 "flag": 0,
                 "filter": 0,
                 "count_letters": len(Letters.objects.filter(
-                        destination_id=User.objects.filter(username=self.username).values('id')[0]['id'],
-                        status="unread"))
+                    destination_id=User.objects.filter(username=self.username).values('id')[0]['id'],
+                    status="unread"))
                 }
         return data
 
@@ -100,13 +100,18 @@ class DataForPage:  # pylint: disable=too-few-public-methods
 class CountLikes:  # pylint: disable=too-few-public-methods
     """Class for counting likes"""
 
-    def __init__(self, id_topic, like):
-        self.like = int(like)
+    def __init__(self, id_topic=None, like=None, dislike=None):
+        self.like = like
         self.id_topic = id_topic
+        self.dislike = dislike
 
     def repair_likes(self):
         """function for making update query"""
-        LessonTopics.objects.filter(id=self.id_topic).update(like=self.like + 1)
+        LessonTopics.objects.filter(id=self.id_topic).update(like=int(self.like) + 1)
+
+    def repair_dislikes(self):
+        """function for making update query dilike"""
+        LessonTopics.objects.filter(id=self.id_topic).update(dislike=int(self.dislike) + 1)
 
 
 class LessonsPagePost:  # pylint: disable=too-few-public-methods

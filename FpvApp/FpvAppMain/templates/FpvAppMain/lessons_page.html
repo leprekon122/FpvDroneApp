@@ -23,7 +23,7 @@
             <form method="get">
                 <input class="form-control" name="find_by_title">
                 <br>
-                <button class="btn btn-warning" type="submit"  name="search_by_title" value="search_by_title">search
+                <button class="btn btn-warning" type="submit" name="search_by_title" value="search_by_title">search
                 </button>
             </form>
         </div>
@@ -59,7 +59,7 @@
     </div>
 </div>
 {%else%}
-<div class="container-fluid detail_container" >
+<div class="container-fluid detail_container">
     <div class="like_and_author">
         <div class="author">
             <p class="text-light">author: {{model.0.author}}</p>
@@ -79,12 +79,16 @@
                 </div>
             </form>
 
-            <div class="dislike">
-                <i class="fa-solid fa-thumbs-down text-danger"></i>
-                <div class="round_dislike">
-                    <span id="dislike">{{model.0.dislike}}</span>
+            <form method="get">
+                <div class="dislike">
+                    <button id="btn_dislike" style="background: transparent; border:none" type="submit"
+                            value="{{model.0.dislike}} {{model.0.id}}" name="dislike"><i
+                            class="fa-solid fa-thumbs-down text-danger"></i></button>
+                    <div class="round_dislike">
+                        <span id="dislike">{{model.0.dislike}}</span>
+                    </div>
                 </div>
-            </div>
+            </form>
 
         </div>
 
@@ -168,11 +172,6 @@
 {%if letters_status == 1%}
 <script>
         $('#letters').modal('show')
-
-
-
-
-
 
 
 

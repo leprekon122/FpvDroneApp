@@ -41,10 +41,12 @@ class LessonsPage(APIView):
     def get(request):
         """LessonsPage logic get req"""
         like = request.GET.get('like')
+        dislike = request.GET.get('dislike')
         detail_info = request.GET.get('detail')
         search_by_title = request.GET.get('search_by_title')
         remove_filter = request.GET.get('remove_filter')
         read = request.GET.get('read')
+        print(dislike)
 
         # ===find by tags===
         tag_1 = request.GET.get('tag_1')
@@ -53,6 +55,22 @@ class LessonsPage(APIView):
         tag_4 = request.GET.get('tag_4')
         tag_5 = request.GET.get('tag_5')
         # ===================
+
+        if dislike:
+            id_topic = dislike.split()[1]
+            ds = dislike.split()[0]
+            print(id_topic, ds)
+            logic_det = CountLikes(id_topic, None, dislike=ds)
+            logic_det.repair_dislikes()
+            logic = DetailInfo(id_topic).make_query()
+            data = {"model": logic,
+                    "flag": 1,
+                    "filter": 0,
+                    "count_letters": len(Letters.objects.filter(
+                        destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
+                        status="unread"))
+                    }
+            return render(request, 'FpvAppMain/lessons_page.html', data)
 
         # likes logic block
         if like:
