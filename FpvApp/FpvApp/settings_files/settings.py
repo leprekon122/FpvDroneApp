@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^g=j)yc%plfwly5d5%^lg=-mejj!ihbb!!-g=80y^o^8epie)a'
+SECRET_KEY = os.getenv('secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'FpvApp.wsgi.application'
 DATABASES = {
  'default': {
    'ENGINE': 'django.db.backends.postgresql',
-   'NAME': os.getenv("fpv_db"),
+   'NAME': os.getenv('db_name'),
    'USER': os.getenv('user_db'),
    'PASSWORD': os.getenv('password_db'),
    'HOST': os.getenv('db_host'),
