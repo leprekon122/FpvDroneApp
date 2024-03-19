@@ -102,7 +102,7 @@
                             <br>
                             <input type="text" class="form-control" name="username" placeholder="username">
                             <br>
-                            <button class="btn btn-success" type="submit" name="send_letters">send</button>
+                            <button class="btn btn-success" type="submit" name="send_letters" value="send_letters">send</button>
                         </div>
                     </form>
                 </div>
@@ -212,15 +212,20 @@
                     </div>
                     <div class="add_text">
                         <label for="text" class="text-light">text</label>
-                        <input class="form-control" type="text" name="text" id="text" style="height: 300px">
+                        <textarea class="form-control"  name="text" id="text" style="height: 300px" rows="5">
+                        </textarea>
                         <label for="text_1" class="text-light">text_1</label>
-                        <input class="form-control" type="text" name="text_1" id="text_1" style="height: 300px">
+                        <textarea class="form-control"  name="text_1" id="text_1" style="height: 300px" rows="5">
+                        </textarea>
                         <label for="text_2" class="text-light">text_2</label>
-                        <input class="form-control" type="text" name="text_2" id="text_2" style="height: 300px">
+                        <textarea class="form-control"  name="text_2" id="text_2" style="height: 300px" rows="5">
+                        </textarea>
                         <label for="text_3" class="text-light">text_3</label>
-                        <input class="form-control" type="text" name="text_3" id="text_3" style="height: 300px">
+                        <textarea class="form-control"  name="text_3" id="text_3" style="height: 300px" rows="5">
+                        </textarea>
                         <label for="text_4" class="text-light">text_4</label>
-                        <input class="form-control" type="text" name="text_4" id="text_4" style="height: 300px">
+                        <textarea class="form-control"  name="text_4" id="text_4" style="height: 300px" rows="5">
+                        </textarea>
                     </div>
                     <div class="choosing_tags">
                         <div style="width: 20%;">
@@ -285,7 +290,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" style="width: 100%; background-color: transparent;">
+                    <button name="save_article" value="save_article" type="submit" class="btn btn-danger" style="width: 100%; background-color: transparent;">
                         Save changes
                     </button>
                 </div>

@@ -13,36 +13,36 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='lessontopics',
             name='pic_1',
-            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/Static/FpvAppMain/img'),
+            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/static/FpvAppMain/img'),
         ),
         migrations.AlterField(
             model_name='lessontopics',
             name='pic_2',
-            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/Static/FpvAppMain/img'),
+            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/static/FpvAppMain/img'),
         ),
         migrations.AlterField(
             model_name='lessontopics',
             name='pic_3',
-            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/Static/FpvAppMain/img'),
+            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/static/FpvAppMain/img'),
         ),
         migrations.AlterField(
             model_name='lessontopics',
             name='pic_4',
-            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/Static/FpvAppMain/img'),
+            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/static/FpvAppMain/img'),
         ),
         migrations.AlterField(
             model_name='lessontopics',
             name='pic_5',
-            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/Static/FpvAppMain/img'),
+            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/static/FpvAppMain/img'),
         ),
         migrations.AlterField(
             model_name='lessontopics',
             name='pic_6',
-            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/Static/FpvAppMain/img'),
+            field=models.ImageField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/static/FpvAppMain/img'),
         ),
         migrations.AlterField(
             model_name='lessontopics',
             name='video',
-            field=models.FileField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/Static/FpvAppMain/video'),
+            field=models.FileField(blank=True, null=True, upload_to='FpvApp/FpvAppMain/static/FpvAppMain/video'),
         ),
     ]

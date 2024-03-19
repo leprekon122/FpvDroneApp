@@ -1,22 +1,26 @@
 """import block"""
+import random
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from .models import LessonTopics, TagsModel, Letters
 from .views_logic import DetailInfo, SearchByTitle, FindByTagName, LettersLogic, DataForPage, CountLikes, \
-    LessonsPagePost, CreatingLetter
+    LessonsPagePost, CreatingLetter, RewriteArticle
+from rest_framework import permissions
+
 
 
 def login_page(request):
     """Login page logic"""
+
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
-
     if user is not None:
         login(request, user)
-        return redirect('main_page')
+        return render(request, "FpvAppMain/main_page.html")
 
     return render(request, "FpvAppMain/start_page.html")
 
@@ -27,7 +31,6 @@ class MainPage(APIView):
     @staticmethod
     def get(request):
         """Main page logic get  req"""
-
         logic_set = DataForPage(request.user)
         data = logic_set.data()
 
@@ -35,18 +38,20 @@ class MainPage(APIView):
 
 
 class LessonsPage(APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
     """LessonsPage logic"""
 
     @staticmethod
     def get(request):
         """LessonsPage logic get req"""
+
         like = request.GET.get('like')
         dislike = request.GET.get('dislike')
         detail_info = request.GET.get('detail')
         search_by_title = request.GET.get('search_by_title')
         remove_filter = request.GET.get('remove_filter')
         read = request.GET.get('read')
-        print(dislike)
 
         # ===find by tags===
         tag_1 = request.GET.get('tag_1')
@@ -59,7 +64,6 @@ class LessonsPage(APIView):
         if dislike:
             id_topic = dislike.split()[1]
             ds = dislike.split()[0]
-            print(id_topic, ds)
             logic_det = CountLikes(id_topic, None, dislike=ds)
             logic_det.repair_dislikes()
             logic = DetailInfo(id_topic).make_query()
@@ -137,14 +141,13 @@ class LessonsPage(APIView):
             return render(request, 'FpvAppMain/lessons_page.html', data)
 
         if detail_info:
-
             logic = DetailInfo(detail_info).make_query()
             data = {"model": logic,
                     "flag": 1,
                     "filter": 0,
                     "count_letters": len(Letters.objects.filter(
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
-                        status="unread"))
+                        status="unread")),
                     }
             return render(request, 'FpvAppMain/lessons_page.html', data)
         logic_set = DataForPage(request.user)
@@ -155,42 +158,113 @@ class LessonsPage(APIView):
     def post(request):
         """function for post request in lessons page"""
 
-        send_letters = request.POST.get
-        username = request.POST.get('username')
-        text_letters = request.POST.get('text_letters')
-        title_letters = request.POST.get('title_letters')
+        rewrite_article = request.POST.get('rewrite_article')
+        save_article = request.POST.get('save_article')
+        send_letters = request.POST.get('send_letters')
+        rewrite_video_btn = request.POST.get('rewrite_video_btn')
+        if rewrite_video_btn:
+            vd = request.FILES['rewrite_video']
+            logic_data = DetailInfo(rewrite_video_btn).make_query()
+            logic = RewriteArticle(rewrite_video_btn, vd)
+            logic.update_video()
 
-        if all([title_letters, send_letters, username]):
-            username = User.objects.filter(username=username).values()[0]["id"]
-            current_username = request.user
-            logic = CreatingLetter(username, title_letters, text_letters, current_username)
+            data = {"model": logic_data,
+                    "flag": 1,
+                    "filter": 0,
+                    "count_letters": len(Letters.objects.filter(
+                        destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
+                        status="unread")),
+                    }
 
-            return render(request, 'FpvAppMain/lessons_page.html', logic.create_letter)
+            return render(request, 'FpvAppMain/lessons_page.html', data)
 
-        title = request.POST.get('title')
-        photo_set = []
-        video = None
-        if request.POST.get('video'):
-            video = request.FILES['video']
-        photo = request.POST.get('photo')
-        for el in range(int(photo)):
-            num = el + 1
-            pic = request.FILES[f"pic_{num}"]
-            photo_set.append(pic)
-        add_date = request.POST.get('add_date')
-        text = request.POST.get('text')
-        text_1 = request.POST.get('text_1')
-        text_2 = request.POST.get('text_2')
-        text_3 = request.POST.get('text_3')
-        text_4 = request.POST.get('text_4')
-        tag_1 = request.POST.get('tag_1')
-        tag_2 = request.POST.get('tag_2')
-        tag_3 = request.POST.get('tag_3')
-        tag_4 = request.POST.get('tag_4')
-        tag_5 = request.POST.get('tag_5')
-        author = request.user
+        if rewrite_article:
+            # rewrite block
+            title = request.POST.get('rewrite_title')
+            pic_0 = request.POST.get('rewrite_pic_0')
+            pic_1 = request.POST.get('rewrite_pic_1')
+            pic_2 = request.POST.get('rewrite_pic_2')
+            pic_3 = request.POST.get('rewrite_pic_3')
+            pic_4 = request.POST.get('rewrite_pic_4')
+            text = request.POST.get('rewrite_text')
+            text_1 = request.POST.get('rewrite_text_1')
+            text_2 = request.POST.get('rewrite_text_2')
+            text_3 = request.POST.get('rewrite_text_3')
+            text_4 = request.POST.get('rewrite_text_4')
 
-        create_article = LessonsPagePost(title, photo_set, video, photo, add_date, text, text_1, text_2, text_3, text_4,
-                                         tag_1, tag_2, tag_3, tag_4, tag_5, author)
+            data_for_rewrite = {}
+            data_set = {'title': title,
+                        'text': text, 'text_1': text_1, 'text_2': text_2,
+                        'text_3': text_3, 'text_4': text_4}
 
-        return render(request, 'FpvAppMain/lessons_page.html', create_article.create_article)
+            for key, value in data_set.items():
+                if all([value != '', value != False]):
+                    data_for_rewrite[key] = value
+
+            for key_data, value_data in data_for_rewrite.items():
+                if key_data == 'title':
+                    LessonTopics.objects.filter(id=rewrite_article).update(tittle=value_data)
+                if key_data == 'text':
+                    LessonTopics.objects.filter(id=rewrite_article).update(text=value_data)
+                if key_data == 'text_1':
+                    LessonTopics.objects.filter(id=rewrite_article).update(text_1=value_data)
+                if key_data == 'text_2':
+                    LessonTopics.objects.filter(id=rewrite_article).update(text_2=value_data)
+                if key_data == 'text_3':
+                    LessonTopics.objects.filter(id=rewrite_article).update(text_3=value_data)
+                if key_data == 'text_4':
+                    LessonTopics.objects.filter(id=rewrite_article).update(text_4=value_data)
+
+            data = {"model": LessonTopics.objects.filter(id=rewrite_article),
+                    "flag": 1,
+                    "filter": 0,
+                    "count_letters": len(Letters.objects.filter(status="unread")),
+                    }
+            return render(request, 'FpvAppMain/lessons_page.html', data)
+            # =============
+
+        if send_letters:
+            send_letters = request.POST.get
+            username = request.POST.get('username')
+            text_letters = request.POST.get('text_letters')
+            title_letters = request.POST.get('title_letters')
+
+            if all([title_letters, send_letters, username]):
+                username = User.objects.filter(username=username).values()[0]["id"]
+                current_username = request.user
+                logic = CreatingLetter(username, title_letters, text_letters, current_username)
+
+                return render(request, 'FpvAppMain/lessons_page.html', logic.create_letter)
+
+        if save_article:
+            title = request.POST.get('title')
+            photo_set = []
+            video = None
+            if request.POST.get('video'):
+                video = request.FILES['video']
+            photo = request.POST.get('photo')
+            for el in range(int(photo)):
+                num = el + 1
+                pic = request.FILES[f"pic_{num}"]
+                photo_set.append(pic)
+            print(photo_set)
+            add_date = request.POST.get('add_date')
+            text = request.POST.get('text')
+            text_1 = request.POST.get('text_1')
+            text_2 = request.POST.get('text_2')
+            text_3 = request.POST.get('text_3')
+            text_4 = request.POST.get('text_4')
+            tag_1 = request.POST.get('tag_1')
+            tag_2 = request.POST.get('tag_2')
+            tag_3 = request.POST.get('tag_3')
+            tag_4 = request.POST.get('tag_4')
+            tag_5 = request.POST.get('tag_5')
+            author = request.user
+
+            create_article = LessonsPagePost(title, photo_set, video, photo, add_date, text, text_1, text_2, text_3,
+                                             text_4,
+                                             tag_1, tag_2, tag_3, tag_4, tag_5, author)
+
+            return render(request, 'FpvAppMain/lessons_page.html', create_article.create_article)
+
+        return render(request, 'FpvAppMain/lessons_page.html')

@@ -4,7 +4,8 @@
 
 {%block content%}
 {%if flag == 0%}
-<div class="lessons-main" xmlns="http://www.w3.org/1999/html" style="position:fixed">
+<div class="lessons-main" xmlns="http://www.w3.org/1999/html" style="position:fixed"
+     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
     <div class="lesson_filters">
         {%if filter == 1%}
@@ -42,11 +43,21 @@
             <div class="date_and_tags">
                 <form method="get">
                     <div class="tags">
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_1" value="{{el.tag_1}}" style="background-color: transparent; border: none">{{el.tag_1}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_2" value="{{el.tag_2}}" style="background-color: transparent; border: none">{{el.tag_2}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_3" value="{{el.tag_3}}" style="background-color: transparent; border: none">{{el.tag_3}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_4" value="{{el.tag_4}}" style="background-color: transparent; border: none">{{el.tag_4}}</button>
-                        <button class="btn btn-warning tag text-light" type="submit" name="tag_5" value="{{el.tag_5}}" style="background-color: transparent; border: none">{{el.tag_5}}</button>
+                        <button class="btn btn-warning tag text-light" id="tag_1" type="submit" name="tag_1"
+                                value="{{el.tag_1}}" style="background-color: transparent; border: none">{{el.tag_1}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_2" type="submit" name="tag_2"
+                                value="{{el.tag_2}}" style="background-color: transparent; border: none">{{el.tag_2}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_3" type="submit" name="tag_3"
+                                value="{{el.tag_3}}" style="background-color: transparent; border: none">{{el.tag_3}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_4" type="submit" name="tag_4"
+                                value="{{el.tag_4}}" style="background-color: transparent; border: none">{{el.tag_4}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_5" type="submit" name="tag_5"
+                                value="{{el.tag_5}}" style="background-color: transparent; border: none">{{el.tag_5}}
+                        </button>
                     </div>
                 </form>
                 <div class="date">
@@ -89,6 +100,12 @@
                     </div>
                 </div>
             </form>
+
+
+            <div class="rewrite">
+                <button name="rewrite" class="text-light" style="background: transparent;  border:none"><i
+                        class="fa-solid fa-pen-to-square" data-toggle="modal" data-target="#rewrite"></i></button>
+            </div>
 
         </div>
 
@@ -165,13 +182,141 @@
         <p>{{model.0.text_4}}</p>
     </div>
     {%endif%}
+</div>
 
+<div class="modal" tabindex="-1" role="dialog" id="rewrite">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            {%for el in model%}
+            <div class="modal-body">
+
+                <div class="rewrite_title">
+                    <p>title: {{el.title}}</p>
+                    <input name="rewrite_title" type="text" class="form-control" placeholder="rewrite title">
+                </div>
+                <div class="rewrite_pic_main">
+                    <div class="rewrite_pic">
+                        {%if el.pic != ''%}
+                        <img src="media/{{el.pic}}" width="200px" height="200px">
+                        {%endif%}
+                        {%if el.pic == ''%}
+                        <input type="file" name="rewrite_pic_0">
+                        {%endif%}
+
+                    </div>
+
+
+                    <div class="rewrite_pic_1">
+                        {%if el.pic_1 != ''%}
+                        <img src="media/{{el.pic_1}}" width="200px" height="200px">
+                        {%endif%}
+                        {%if el.pic_1 == ''%}
+                        <input type="file" name="rewrite_pic_1">
+                        {%endif%}
+
+                    </div>
+
+
+                    <div class="rewrite_pic_2">
+                        {%if el.pic_2 != ''%}
+                        <img src="media/{{el.pic_2}}" width="200px" height="200px">
+                        {%endif%}
+                        {%if el.pic_2 == ''%}
+                        <input type="file" name="rewrite_pic_2">
+                        {%endif%}
+                    </div>
+
+
+                    <div class="rewrite_pic_3">
+                        {%if el.pic_3 != ''%}
+                        <img src="media/{{el.pic_3}}" width="200px" height="200px">
+                        {%endif%}
+                        {%if el.pic_3 == ''%}
+                        <input type="file" name="rewrite_pic_3">
+                        {%endif%}
+
+                    </div>
+
+
+                    <div class="rewrite_pic_4">
+                        {%if el.pic_4 != ''%}
+                        <img src="media/{{el.pic_4}}" width="200px" height="200px">
+                        {%endif%}
+                        {%if el.pic_4 == ''%}
+                        <input type="file" name="rewrite_pic_4">
+                        {%endif%}
+                    </div>
+
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="rewrite_video">
+                        {%if el.video != ''%}
+                        <video width="200px" height="200px" controls>
+                            <source src="media/{{el.video}}" type="video/mp4">
+                        </video>
+                        {%endif%}
+                        <input type="file" name="rewrite_video">
+                        <button type="submit" class="btn btn-primary" name="rewrite_video_btn" value="{{el.id}}">Save
+                            changes
+                        </button>
+                    </div>
+                </form>
+
+
+                <div class="rewrite_text_main">
+                    <div class="rewrite_text">
+                        <p>{{el.text}}</p>
+                        <textarea rows="3" class="form-control" name="rewrite_text"></textarea>
+                    </div>
+                    <div class="rewrite_text_1">
+                        <p>{{el.text_1}}</p>
+                        <textarea rows="3" class="form-control" name="rewrite_text_1"></textarea>
+                    </div>
+                    <div class="rewrite_text_2">
+                        <p>{{el.text_2}}</p>
+                        <textarea rows="3" class="form-control" name="rewrite_text_2"></textarea>
+                    </div>
+                    <div class="rewrite_text_3">
+                        <p>{{el.text_3}}</p>
+                        <textarea rows="3" class="form-control" name="rewrite_text_3"></textarea>
+                    </div>
+
+                    <div class="rewrite_text_4">
+                        <p>{{el.text_4}}</p>
+                        <textarea rows="3" class="form-control" name="rewrite_text_4"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button  class="btn btn-primary" name="rewrite_article" value="{{el.id}}">Save
+                    changes
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
 </div>
 {%endif%}
 
 {%if letters_status == 1%}
 <script>
         $('#letters').modal('show')
+
+
+
+
+
+
 
 
 

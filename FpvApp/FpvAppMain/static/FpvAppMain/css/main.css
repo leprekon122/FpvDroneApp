@@ -122,6 +122,7 @@ body {background-color: black;
         }
 
 .title_btn:hover {transform: scale(1.5);
+                  transition-duration: 1s;
 }
 
 .date_and_tags {
@@ -237,6 +238,12 @@ body {background-color: black;
                 flex-direction: row;
                 flex-wrap: wrap;
 }
+
+#tag_1:hover{
+              transform: scale(1.5);
+              transition-duration: 1s;
+              color: red;
+              }
 /* ========================*/
 
 /* style for main page */

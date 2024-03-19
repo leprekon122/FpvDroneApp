@@ -29,7 +29,7 @@ class SearchByTitle:  # pylint: disable=too-few-public-methods
 
     def filter_name(self):
         """return filter name"""
-        return "Search_by_date"
+        return "Search_by_title"
 
 
 class FindByTagName:  # pylint: disable=too-few-public-methods
@@ -208,3 +208,33 @@ class CreatingLetter:  # pylint: disable=too-few-public-methods
                 }
 
         return data
+
+
+class RewriteArticle:  # pylint: disable=too-few-public-methods
+    """class for update query in LessonTopic"""
+
+    def __init__(self, set_id, video):
+        self.set_id = set_id
+        self.video = video
+        self.data_set = LessonTopics.objects.get(id=self.set_id)
+
+    def create_data_set(self):
+        """create_daya set for page"""
+        data = {"model": LessonTopics.objects.filter(id=self.set_id),
+                "flag": 1,
+                "filter": 0,
+                "count_letters": len(Letters.objects.filter(status="unread")),
+                }
+        return data
+
+    def update_video(self):
+        """update video in LessonsTopic"""
+        self.data_set.video = self.video
+        self.data_set.save()
+
+    @property
+    def update_pic(self):
+        """update pic in LessonTopics"""
+        self.data_set.pic = self.pic
+        self.data_set.save()
+
