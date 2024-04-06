@@ -247,7 +247,6 @@ class LessonsPage(APIView):
                 num = el + 1
                 pic = request.FILES[f"pic_{num}"]
                 photo_set.append(pic)
-            print(photo_set)
             add_date = request.POST.get('add_date')
             text = request.POST.get('text')
             text_1 = request.POST.get('text_1')
