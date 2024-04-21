@@ -213,9 +213,10 @@ class CreatingLetter:  # pylint: disable=too-few-public-methods
 class RewriteArticle:  # pylint: disable=too-few-public-methods
     """class for update query in LessonTopic"""
 
-    def __init__(self, set_id, video):
+    def __init__(self, set_id, video, pic):
         self.set_id = set_id
         self.video = video
+        self.pic = pic
         self.data_set = LessonTopics.objects.get(id=self.set_id)
 
     def create_data_set(self):
@@ -235,6 +236,22 @@ class RewriteArticle:  # pylint: disable=too-few-public-methods
     @property
     def update_pic(self):
         """update pic in LessonTopics"""
-        self.data_set.pic = self.pic
-        self.data_set.save()
+        for key, value in self.pic.items():
+            if key == "pic_0":
+                self.data_set.pic = value
+                self.data_set.save()
+            elif key == "pic_1":
+                self.data_set.pic_1 = value
+                self.data_set.save()
+            elif key == "pic_2":
+                self.data_set.pic_2 = value
+                self.data_set.save()
+            elif key == "pic_3":
+                self.data_set.pic_3 = value
+                self.data_set.save()
+            elif key == "pic_4":
+                self.data_set.pic_4 = value
+                self.data_set.save()
+        #self.data_set.pic = self.pic
+        #self.data_set.save()
 

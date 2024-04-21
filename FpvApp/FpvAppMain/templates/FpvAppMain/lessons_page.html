@@ -176,10 +176,10 @@
 
 <div class="modal" tabindex="-1" role="dialog" id="rewrite">
     <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: black;">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title text-light">Modal title</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -188,63 +188,72 @@
             <div class="modal-body">
 
                 <div class="rewrite_title">
-                    <p>title: {{el.title}}</p>
+                    <p class="text-light">title: {{el.title}}</p>
                     <input name="rewrite_title" type="text" class="form-control" placeholder="rewrite title">
                 </div>
-                <div class="rewrite_pic_main">
-                    <div class="rewrite_pic">
-                        {%if el.pic != ''%}
-                        <img src="media/{{el.pic}}" width="200px" height="200px">
-                        {%endif%}
-                        {%if el.pic == ''%}
-                        <input type="file" name="rewrite_pic_0">
-                        {%endif%}
+                <form method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="rewrite_pic_main" >
+                        <div class="rewrite_pic">
+                            {%if el.pic != ''%}
+                            <img src="media/{{el.pic}}" width="200px" height="200px">
+                            <input type="file" name="rewrite_pic_0">
+                            {%endif%}
+                            {%if el.pic == ''%}
+                            <input type="file" name="rewrite_pic_0">
+                            {%endif%}
+                        </div>
 
+
+                        <div class="rewrite_pic_1">
+                            {%if el.pic_1 != ''%}
+                            <img src="media/{{el.pic_1}}" width="200px" height="200px">
+                            <input type="file" name="rewrite_pic_1">
+                            {%endif%}
+                            {%if el.pic_1 == ''%}
+                            <input type="file" name="rewrite_pic_1">
+                            {%endif%}
+
+                        </div>
+
+
+                        <div class="rewrite_pic_2">
+                            {%if el.pic_2 != ''%}
+                            <img src="media/{{el.pic_2}}" width="200px" height="200px">
+                            <input type="file" name="rewrite_pic_2">
+                            {%endif%}
+                            {%if el.pic_2 == ''%}
+                            <input type="file" name="rewrite_pic_2">
+                            {%endif%}
+                        </div>
+
+
+                        <div class="rewrite_pic_3">
+                            {%if el.pic_3 != ''%}
+                            <img src="media/{{el.pic_3}}" width="200px" height="200px">
+                            <input type="file" name="rewrite_pic_3">
+                            {%endif%}
+                            {%if el.pic_3 == ''%}
+                            <input type="file" name="rewrite_pic_3">
+                            {%endif%}
+
+                        </div>
+
+
+                        <div class="rewrite_pic_4">
+                            {%if el.pic_4 != ''%}
+                            <img src="media/{{el.pic_4}}" width="200px" height="200px">
+                            <input type="file" name="rewrite_pic_4">
+                            {%endif%}
+                            {%if el.pic_4 == ''%}
+                            <input type="file" name="rewrite_pic_4">
+                            {%endif%}
+                        </div>
+                    <br>
+                    <button class="btn btn-success" name="rewrite_photo" type="submit" value="{{el.id}}" style="width: 100%; background-color: transparent">rewrite_photo</button>
                     </div>
-
-
-                    <div class="rewrite_pic_1">
-                        {%if el.pic_1 != ''%}
-                        <img src="media/{{el.pic_1}}" width="200px" height="200px">
-                        {%endif%}
-                        {%if el.pic_1 == ''%}
-                        <input type="file" name="rewrite_pic_1">
-                        {%endif%}
-
-                    </div>
-
-
-                    <div class="rewrite_pic_2">
-                        {%if el.pic_2 != ''%}
-                        <img src="media/{{el.pic_2}}" width="200px" height="200px">
-                        {%endif%}
-                        {%if el.pic_2 == ''%}
-                        <input type="file" name="rewrite_pic_2">
-                        {%endif%}
-                    </div>
-
-
-                    <div class="rewrite_pic_3">
-                        {%if el.pic_3 != ''%}
-                        <img src="media/{{el.pic_3}}" width="200px" height="200px">
-                        {%endif%}
-                        {%if el.pic_3 == ''%}
-                        <input type="file" name="rewrite_pic_3">
-                        {%endif%}
-
-                    </div>
-
-
-                    <div class="rewrite_pic_4">
-                        {%if el.pic_4 != ''%}
-                        <img src="media/{{el.pic_4}}" width="200px" height="200px">
-                        {%endif%}
-                        {%if el.pic_4 == ''%}
-                        <input type="file" name="rewrite_pic_4">
-                        {%endif%}
-                    </div>
-
-                </div>
+                </form>
+                <br>
                 <form method="post" enctype="multipart/form-data">
                     {%csrf_token%}
                     <div class="rewrite_video">
@@ -254,8 +263,8 @@
                         </video>
                         {%endif%}
                         <input type="file" name="rewrite_video">
-                        <button type="submit" class="btn btn-primary" name="rewrite_video_btn" value="{{el.id}}">Save
-                            changes
+                        <br>
+                        <button type="submit" style="width: 100%; background-color: transparent" class="btn btn-success" name="rewrite_video_btn" value="{{el.id}}">rewrite  video
                         </button>
                     </div>
                 </form>
@@ -264,30 +273,30 @@
                 <div class="rewrite_text_main">
                     <div class="rewrite_text">
                         <p>{{el.text}}</p>
-                        <textarea rows="3" class="form-control" name="rewrite_text"></textarea>
+                        <textarea rows="3" class="form-control" name="rewrite_text" placeholder="text_1"></textarea>
                     </div>
                     <div class="rewrite_text_1">
                         <p>{{el.text_1}}</p>
-                        <textarea rows="3" class="form-control" name="rewrite_text_1"></textarea>
+                        <textarea rows="3" class="form-control" name="rewrite_text_1" placeholder="text_2"></textarea>
                     </div>
                     <div class="rewrite_text_2">
                         <p>{{el.text_2}}</p>
-                        <textarea rows="3" class="form-control" name="rewrite_text_2"></textarea>
+                        <textarea rows="3" class="form-control" name="rewrite_text_2" placeholder="text_3"></textarea>
                     </div>
                     <div class="rewrite_text_3">
                         <p>{{el.text_3}}</p>
-                        <textarea rows="3" class="form-control" name="rewrite_text_3"></textarea>
+                        <textarea rows="3" class="form-control" name="rewrite_text_3" placeholder="text_4"></textarea>
                     </div>
 
                     <div class="rewrite_text_4">
                         <p>{{el.text_4}}</p>
-                        <textarea rows="3" class="form-control" name="rewrite_text_4"></textarea>
+                        <textarea rows="3" class="form-control" name="rewrite_text_4" placeholder="text_5"></textarea>
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button  class="btn btn-primary" name="rewrite_article" value="{{el.id}}">Save
+                <button class="btn btn-primary" name="rewrite_article" value="{{el.id}}">Save
                     changes
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -301,6 +310,7 @@
 {%if letters_status == 1%}
 <script>
         $('#letters').modal('show')
+
 </script>
 {%endif%}
 

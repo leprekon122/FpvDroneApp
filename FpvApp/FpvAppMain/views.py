@@ -11,7 +11,6 @@ from .views_logic import DetailInfo, SearchByTitle, FindByTagName, LettersLogic,
 from rest_framework import permissions
 
 
-
 def login_page(request):
     """Login page logic"""
 
@@ -38,7 +37,6 @@ class MainPage(APIView):
 
 
 class LessonsPage(APIView):
-
     permission_classes = [permissions.IsAuthenticated]
     """LessonsPage logic"""
 
@@ -162,6 +160,18 @@ class LessonsPage(APIView):
         save_article = request.POST.get('save_article')
         send_letters = request.POST.get('send_letters')
         rewrite_video_btn = request.POST.get('rewrite_video_btn')
+        rewrite_photo = request.POST.get("rewrite_photo")
+        if rewrite_photo:
+            rewrite_photo_set = {}
+            for el in range(5):
+                try:
+                    photo = request.FILES[f"rewrite_pic_{el}"]
+                    rewrite_photo_set[f"pic_{el}"] = photo
+                except Exception as ex:
+                    print(ex)
+            logic = RewriteArticle(rewrite_photo, video=None, pic=rewrite_photo_set)
+            logic.update_pic
+
         if rewrite_video_btn:
             vd = request.FILES['rewrite_video']
             logic_data = DetailInfo(rewrite_video_btn).make_query()
@@ -181,11 +191,6 @@ class LessonsPage(APIView):
         if rewrite_article:
             # rewrite block
             title = request.POST.get('rewrite_title')
-            pic_0 = request.POST.get('rewrite_pic_0')
-            pic_1 = request.POST.get('rewrite_pic_1')
-            pic_2 = request.POST.get('rewrite_pic_2')
-            pic_3 = request.POST.get('rewrite_pic_3')
-            pic_4 = request.POST.get('rewrite_pic_4')
             text = request.POST.get('rewrite_text')
             text_1 = request.POST.get('rewrite_text_1')
             text_2 = request.POST.get('rewrite_text_2')
