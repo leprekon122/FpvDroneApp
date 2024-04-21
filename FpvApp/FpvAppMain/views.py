@@ -151,7 +151,7 @@ class LessonsPage(APIView):
         logic_set = DataForPage(request.user)
         data = logic_set.data()
         return render(request, 'FpvAppMain/lessons_page.html', data)
-
+    ####
     @staticmethod
     def post(request):
         """function for post request in lessons page"""
