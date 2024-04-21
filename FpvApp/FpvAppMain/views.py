@@ -141,17 +141,20 @@ class LessonsPage(APIView):
         if detail_info:
             logic = DetailInfo(detail_info).make_query()
             data = {"model": logic,
+                    "user": str(LessonTopics.objects.filter(id=detail_info).values('author')[0]["author"]),
                     "flag": 1,
                     "filter": 0,
                     "count_letters": len(Letters.objects.filter(
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
                         status="unread")),
+                    "current_user": str(request.user)
                     }
+
             return render(request, 'FpvAppMain/lessons_page.html', data)
         logic_set = DataForPage(request.user)
         data = logic_set.data()
         return render(request, 'FpvAppMain/lessons_page.html', data)
-    ####
+
     @staticmethod
     def post(request):
         """function for post request in lessons page"""
@@ -169,24 +172,17 @@ class LessonsPage(APIView):
                     rewrite_photo_set[f"pic_{el}"] = photo
                 except Exception as ex:
                     print(ex)
-            logic = RewriteArticle(rewrite_photo, video=None, pic=rewrite_photo_set)
+            logic = RewriteArticle(rewrite_photo, video=None, pic=rewrite_photo_set, current_user=str(request.user))
             logic.update_pic
+            return render(request, 'FpvAppMain/lessons_page.html', logic.create_data_set())
 
         if rewrite_video_btn:
             vd = request.FILES['rewrite_video']
-            logic_data = DetailInfo(rewrite_video_btn).make_query()
-            logic = RewriteArticle(rewrite_video_btn, vd)
+            DetailInfo(rewrite_video_btn).make_query()
+            logic = RewriteArticle(rewrite_video_btn, vd, current_user=str(request.user))
             logic.update_video()
 
-            data = {"model": logic_data,
-                    "flag": 1,
-                    "filter": 0,
-                    "count_letters": len(Letters.objects.filter(
-                        destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
-                        status="unread")),
-                    }
-
-            return render(request, 'FpvAppMain/lessons_page.html', data)
+            return render(request, 'FpvAppMain/lessons_page.html', logic.create_data_set())
 
         if rewrite_article:
             # rewrite block

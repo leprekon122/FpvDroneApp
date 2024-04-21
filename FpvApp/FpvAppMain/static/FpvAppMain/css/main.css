@@ -78,6 +78,11 @@ body {background-color: black;
              justify-content: center;
              }
 
+.detail_pic:hover {
+                   transform: scale(1.3);
+                   transition-duration: 1.5s;
+}
+
 .lessons-main {
                width: 100%;
                height: 90vh;
@@ -188,10 +193,13 @@ body {background-color: black;
 
 /* settings for like, author and dislike on lessons page */
 .like_and_author {
-                  width: 100%;
+                  width: 90%;
                   display: flex;
                   flex-direction: row;
                   padding-top: 1%;
+                  border-left: 3px solid #fff;
+                  border-right: 3px solid #fff;
+
 }
 
 .like_main {

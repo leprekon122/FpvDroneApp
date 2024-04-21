@@ -213,8 +213,9 @@ class CreatingLetter:  # pylint: disable=too-few-public-methods
 class RewriteArticle:  # pylint: disable=too-few-public-methods
     """class for update query in LessonTopic"""
 
-    def __init__(self, set_id, video, pic):
+    def __init__(self, set_id, video=None, pic=None, current_user=None):
         self.set_id = set_id
+        self.current_user = current_user
         self.video = video
         self.pic = pic
         self.data_set = LessonTopics.objects.get(id=self.set_id)
@@ -222,9 +223,11 @@ class RewriteArticle:  # pylint: disable=too-few-public-methods
     def create_data_set(self):
         """create_daya set for page"""
         data = {"model": LessonTopics.objects.filter(id=self.set_id),
+                "user": str(LessonTopics.objects.filter(id=self.set_id).values('author')[0]["author"]),
                 "flag": 1,
                 "filter": 0,
                 "count_letters": len(Letters.objects.filter(status="unread")),
+                "current_user":  self.current_user
                 }
         return data
 
@@ -252,6 +255,5 @@ class RewriteArticle:  # pylint: disable=too-few-public-methods
             elif key == "pic_4":
                 self.data_set.pic_4 = value
                 self.data_set.save()
-        #self.data_set.pic = self.pic
-        #self.data_set.save()
+
 

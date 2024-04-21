@@ -60,8 +60,7 @@
     </div>
 </div>
 {%else%}
-<div class="container-fluid detail_container">
-    <div class="like_and_author">
+<div class="container-fluid like_and_author">
         <div class="author">
             <p class="text-light">author: {{model.0.author}}</p>
         </div>
@@ -92,14 +91,16 @@
             </form>
 
 
+            {%if user == current_user%}
             <div class="rewrite">
                 <button name="rewrite" class="text-light" style="background: transparent;  border:none"><i
                         class="fa-solid fa-pen-to-square" data-toggle="modal" data-target="#rewrite"></i></button>
             </div>
-
+            {%endif%}
         </div>
 
-    </div>
+</div>
+<div class="container-fluid detail_container">
     <br>
     <div class="detail_title">
         <h5 class="text-light">{{model.0.tittle}}</h5>
@@ -250,7 +251,7 @@
                             {%endif%}
                         </div>
                     <br>
-                    <button class="btn btn-success" name="rewrite_photo" type="submit" value="{{el.id}}" style="width: 100%; background-color: transparent">rewrite_photo</button>
+                    <button class="btn btn-success" name="rewrite_photo" type="submit" value="{{el.id}}" style="width: 100%; background-color: transparent;">rewrite_photo</button>
                     </div>
                 </form>
                 <br>
