@@ -1,7 +1,7 @@
 """import block"""
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import LessonTopics, TagsModel, Letters
+from .models import LessonTopics, TagsModel, Letters, CommentsTableMain
 
 
 class DetailInfo:  # pylint: disable=too-few-public-methods
@@ -205,6 +205,7 @@ class CreatingLetter:  # pylint: disable=too-few-public-methods
                 "filter": 0,
                 'letters_status': 1,
                 "count_letters": len(Letters.objects.filter(status="unread"))
+
                 }
 
         return data
@@ -227,7 +228,8 @@ class RewriteArticle:  # pylint: disable=too-few-public-methods
                 "flag": 1,
                 "filter": 0,
                 "count_letters": len(Letters.objects.filter(status="unread")),
-                "current_user":  self.current_user
+                "current_user": self.current_user,
+                "all_comments": CommentsTableMain.objects.filter(which_lesson_topic=self.set_id)
                 }
         return data
 
@@ -257,3 +259,30 @@ class RewriteArticle:  # pylint: disable=too-few-public-methods
                 self.data_set.save()
 
 
+class CreateComments:
+    """class for creating comments"""
+
+    def __init__(self, set_id, username, text):
+        self.set_id = set_id
+        self.username = username
+        self.text = text
+
+    @property
+    def create_comment(self):
+        """fucnc for create personal comment """
+        CommentsTableMain.objects.create(user=self.username, text_of_comment=self.text,
+                                         which_lesson_topic=LessonTopics.objects.filter(id=self.set_id)[0])
+
+    @property
+    def create_data_set(self):
+        """create_daya set for page"""
+        data = {"model": LessonTopics.objects.filter(id=self.set_id),
+                "user": str(LessonTopics.objects.filter(id=self.set_id).values('author')[0]["author"]),
+                "flag": 1,
+                "filter": 0,
+                "count_letters": len(Letters.objects.filter(status="unread")),
+                "current_user": self.username,
+                "all_comments": CommentsTableMain.objects.filter(
+                    which_lesson_topic=LessonTopics.objects.filter(id=self.set_id)[0])
+                }
+        return data

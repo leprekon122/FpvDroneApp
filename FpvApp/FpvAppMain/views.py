@@ -5,9 +5,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
-from .models import LessonTopics, TagsModel, Letters
+from .models import LessonTopics, TagsModel, Letters, CommentsTableMain
 from .views_logic import DetailInfo, SearchByTitle, FindByTagName, LettersLogic, DataForPage, CountLikes, \
-    LessonsPagePost, CreatingLetter, RewriteArticle
+    LessonsPagePost, CreatingLetter, RewriteArticle, CreateComments
 from rest_framework import permissions
 
 
@@ -147,7 +147,8 @@ class LessonsPage(APIView):
                     "count_letters": len(Letters.objects.filter(
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
                         status="unread")),
-                    "current_user": str(request.user)
+                    "current_user": str(request.user),
+                    "all_comments": CommentsTableMain.objects.filter(which_lesson_topic=detail_info)
                     }
 
             return render(request, 'FpvAppMain/lessons_page.html', data)
@@ -164,6 +165,14 @@ class LessonsPage(APIView):
         send_letters = request.POST.get('send_letters')
         rewrite_video_btn = request.POST.get('rewrite_video_btn')
         rewrite_photo = request.POST.get("rewrite_photo")
+        comment_btn = request.POST.get('comment_btn')
+        if comment_btn:
+            text = request.POST.get('comment_text')
+            username = request.user
+            logic = CreateComments(comment_btn, username, text)
+            logic.create_comment
+            return render(request, 'FpvAppMain/lessons_page.html', logic.create_data_set)
+
         if rewrite_photo:
             rewrite_photo_set = {}
             for el in range(5):
@@ -234,6 +243,7 @@ class LessonsPage(APIView):
                 username = User.objects.filter(username=username).values()[0]["id"]
                 current_username = request.user
                 logic = CreatingLetter(username, title_letters, text_letters, current_username)
+
 
                 return render(request, 'FpvAppMain/lessons_page.html', logic.create_letter)
 

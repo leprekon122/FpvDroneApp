@@ -43,11 +43,21 @@
             <div class="date_and_tags">
                 <form method="get">
                     <div class="tags">
-                        <button class="btn btn-warning tag text-light" id="tag_1" type="submit" name="tag_1" value="{{el.tag_1}}" style="background-color: transparent; border: none">{{el.tag_1}}</button>
-                        <button class="btn btn-warning tag text-light" id="tag_2" type="submit" name="tag_2" value="{{el.tag_2}}" style="background-color: transparent; border: none">{{el.tag_2}}</button>
-                        <button class="btn btn-warning tag text-light" id="tag_3" type="submit" name="tag_3" value="{{el.tag_3}}" style="background-color: transparent; border: none">{{el.tag_3}}</button>
-                        <button class="btn btn-warning tag text-light" id="tag_4" type="submit" name="tag_4" value="{{el.tag_4}}" style="background-color: transparent; border: none">{{el.tag_4}}</button>
-                        <button class="btn btn-warning tag text-light" id="tag_5" type="submit" name="tag_5" value="{{el.tag_5}}" style="background-color: transparent; border: none">{{el.tag_5}}</button>
+                        <button class="btn btn-warning tag text-light" id="tag_1" type="submit" name="tag_1"
+                                value="{{el.tag_1}}" style="background-color: transparent; border: none">{{el.tag_1}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_2" type="submit" name="tag_2"
+                                value="{{el.tag_2}}" style="background-color: transparent; border: none">{{el.tag_2}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_3" type="submit" name="tag_3"
+                                value="{{el.tag_3}}" style="background-color: transparent; border: none">{{el.tag_3}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_4" type="submit" name="tag_4"
+                                value="{{el.tag_4}}" style="background-color: transparent; border: none">{{el.tag_4}}
+                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_5" type="submit" name="tag_5"
+                                value="{{el.tag_5}}" style="background-color: transparent; border: none">{{el.tag_5}}
+                        </button>
                     </div>
                 </form>
                 <div class="date">
@@ -61,43 +71,43 @@
 </div>
 {%else%}
 <div class="container-fluid like_and_author">
-        <div class="author">
-            <p class="text-light">author: {{model.0.author}}</p>
-        </div>
-        <div class="like_main">
-            <form method="get">
-                <div class="like">
-                    <button id="btn_like" style="background: transparent; border:none" name="like"
-                            value="{{model.0.like}} {{model.0.id}}"
-                            type="submit"><i
-                            class="fa-solid fa-heart text-success"></i>
-                    </button>
-                    <div class="round_like" onclick="like()">
-                        <span id="like">{{model.0.like}}</span>
-                    </div>
-
+    <div class="author">
+        <p class="text-light">author: {{model.0.author}}</p>
+    </div>
+    <div class="like_main">
+        <form method="get">
+            <div class="like">
+                <button id="btn_like" style="background: transparent; border:none" name="like"
+                        value="{{model.0.like}} {{model.0.id}}"
+                        type="submit"><i
+                        class="fa-solid fa-heart text-success"></i>
+                </button>
+                <div class="round_like" onclick="like()">
+                    <span id="like">{{model.0.like}}</span>
                 </div>
-            </form>
 
-            <form method="get">
-                <div class="dislike">
-                    <button id="btn_dislike" style="background: transparent; border:none" type="submit"
-                            value="{{model.0.dislike}} {{model.0.id}}" name="dislike"><i
-                            class="fa-solid fa-thumbs-down text-danger"></i></button>
-                    <div class="round_dislike">
-                        <span id="dislike">{{model.0.dislike}}</span>
-                    </div>
-                </div>
-            </form>
-
-
-            {%if user == current_user%}
-            <div class="rewrite">
-                <button name="rewrite" class="text-light" style="background: transparent;  border:none"><i
-                        class="fa-solid fa-pen-to-square" data-toggle="modal" data-target="#rewrite"></i></button>
             </div>
-            {%endif%}
+        </form>
+
+        <form method="get">
+            <div class="dislike">
+                <button id="btn_dislike" style="background: transparent; border:none" type="submit"
+                        value="{{model.0.dislike}} {{model.0.id}}" name="dislike"><i
+                        class="fa-solid fa-thumbs-down text-danger"></i></button>
+                <div class="round_dislike">
+                    <span id="dislike">{{model.0.dislike}}</span>
+                </div>
+            </div>
+        </form>
+
+
+        {%if user == current_user%}
+        <div class="rewrite">
+            <button name="rewrite" class="text-light" style="background: transparent;  border:none"><i
+                    class="fa-solid fa-pen-to-square" data-toggle="modal" data-target="#rewrite"></i></button>
         </div>
+        {%endif%}
+    </div>
 
 </div>
 <div class="container-fluid detail_container">
@@ -173,6 +183,36 @@
         <p>{{model.0.text_4}}</p>
     </div>
     {%endif%}
+    <button class="btn btn-warning text-light" style="background-color: transparent; border: none" onclick="comments()">
+        Comments <i class="fa-solid fa-arrow-down" id="arrow_down"></i> <i class="fa-solid fa-arrow-up" id="arrow_up"
+                                                                           style="display:none"></i></button>
+    <br>
+    <div class="container comments_container" id="comments_container" style="display: none">
+        <form method="post">
+            {%csrf_token%}
+            <div class="create_comments">
+                <label for="create_comment" class="text-light">Create comment</label>
+            <textarea class="form_control comments_text" name="comment_text" placeholder="create comment" id="create_comment">
+            </textarea>
+                <br>
+                <button class="btn btn-success" style="background-color: transparent" type="submit" name="comment_btn" value="{{model.0.id}}">
+                    create comment
+                </button>
+                <br>
+            </div>
+        </form>
+        <div class="all_comments">
+            {%for el in all_comments%}
+            <div class="comment">
+                <p class="text_light">{{model.o.id}}</p>
+                <h1 class="text-light">{{el.user}}</h1>
+                <p class="text-light">{{el.text_of_comment}}</p>
+                <p class="text-light">{{el.date_of_comment}}</p>
+            </div>
+            <br>
+            {%endfor%}
+        </div>
+    </div>
 </div>
 
 <div class="modal" tabindex="-1" role="dialog" id="rewrite">
@@ -194,7 +234,7 @@
                 </div>
                 <form method="post" enctype="multipart/form-data">
                     {%csrf_token%}
-                    <div class="rewrite_pic_main" >
+                    <div class="rewrite_pic_main">
                         <div class="rewrite_pic">
                             {%if el.pic != ''%}
                             <img src="media/{{el.pic}}" width="200px" height="200px">
@@ -250,8 +290,10 @@
                             <input type="file" name="rewrite_pic_4">
                             {%endif%}
                         </div>
-                    <br>
-                    <button class="btn btn-success" name="rewrite_photo" type="submit" value="{{el.id}}" style="width: 100%; background-color: transparent;">rewrite_photo</button>
+                        <br>
+                        <button class="btn btn-success" name="rewrite_photo" type="submit" value="{{el.id}}"
+                                style="width: 100%; background-color: transparent;">rewrite_photo
+                        </button>
                     </div>
                 </form>
                 <br>
@@ -265,7 +307,8 @@
                         {%endif%}
                         <input type="file" name="rewrite_video">
                         <br>
-                        <button type="submit" style="width: 100%; background-color: transparent" class="btn btn-success" name="rewrite_video_btn" value="{{el.id}}">rewrite  video
+                        <button type="submit" style="width: 100%; background-color: transparent" class="btn btn-success"
+                                name="rewrite_video_btn" value="{{el.id}}">rewrite video
                         </button>
                     </div>
                 </form>

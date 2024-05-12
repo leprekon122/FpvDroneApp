@@ -86,3 +86,18 @@ class Letters(models.Model):
         """class for choosing name of table"""
         verbose_name = 'Letters'
         verbose_name_plural = 'Letters'
+
+
+class CommentsTableMain(models.Model):
+    """table  for comments"""
+
+    object = None
+
+    user = models.CharField(max_length=255, null=True, blank=True)
+    text_of_comment = models.TextField(null=True, blank=True)
+    date_of_comment = models.DateTimeField(auto_now=True, null=True, blank=True)
+    which_lesson_topic = models.ForeignKey(LessonTopics, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        verbose_name = "CommentsTableMain"
+        verbose_name_plural = "CommentsTableMain"

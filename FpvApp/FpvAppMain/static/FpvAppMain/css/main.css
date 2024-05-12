@@ -72,11 +72,25 @@ body {background-color: black;
       flex-direction: column}
 /*=========================*/
 
+/* comments_container */
+.comments_container {width: 100%;}
+.create_comments {width: 100%;
+                 display: flex;
+                 flex-direction: column;
+                 justify-content: center;
+
+}
+.comments_text {width: 100%}
+.comment {border-bottom: 1px solid #fff;
+          }
+/* ================== */
+
 /* lessons page css set */
 
 .detail_pic {display: flex;
              justify-content: center;
              }
+.create_comments {width: 90%;}
 
 .detail_pic:hover {
                    transform: scale(1.3);
