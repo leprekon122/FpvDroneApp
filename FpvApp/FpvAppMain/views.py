@@ -148,9 +148,8 @@ class LessonsPage(APIView):
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
                         status="unread")),
                     "current_user": str(request.user),
-                    "all_comments": CommentsTableMain.objects.filter(which_lesson_topic=detail_info)
+                    "all_comments": CommentsTableMain.objects.filter(which_lesson_topic=detail_info).values()
                     }
-
             return render(request, 'FpvAppMain/lessons_page.html', data)
         logic_set = DataForPage(request.user)
         data = logic_set.data()
