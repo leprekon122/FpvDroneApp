@@ -168,8 +168,7 @@ class LessonsPage(APIView):
         respond_comment = request.POST.get('respond_comment')
 
         if respond_comment:
-            model = CommentsTableMain.objects.filter(id=respond_comment).update(respond_text='test_respond')
-            print(CommentsTableMain.objects.filter(id=respond_comment).values())
+            CommentsTableMain.objects.filter(id=respond_comment).update(respond_text=request.POST.get('respond_text'))
 
         if comment_btn:
             text = request.POST.get('comment_text')
@@ -248,7 +247,6 @@ class LessonsPage(APIView):
                 username = User.objects.filter(username=username).values()[0]["id"]
                 current_username = request.user
                 logic = CreatingLetter(username, title_letters, text_letters, current_username)
-
 
                 return render(request, 'FpvAppMain/lessons_page.html', logic.create_letter)
 

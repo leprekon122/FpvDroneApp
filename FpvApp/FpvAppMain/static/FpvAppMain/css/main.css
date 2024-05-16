@@ -90,6 +90,11 @@ body {background-color: black;
 
 }
 
+.response_div {
+               display: flex;
+               flex-direction: column;
+}
+
 .button_and_date {
                   display: flex;
                   flex-direction: row;

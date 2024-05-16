@@ -212,14 +212,16 @@
                         <p class="text-light">{{el.respond_text}}</p>
                         {%elif el.respond_text == 'default' %}
                         <p class="text-light">{{el.text_of_comment}}</p>
+                        <div class="response_div" style="display: none" id="response_div_id">
+                            <textarea class="form-control" rows="4" name="respond_text"></textarea>
+                            <button class="btn btn-success" style="background-color: transparent; width: 100%" type="submit" name="respond_comment" value="{{el.id}}">response message</button>
+                        </div>
                         {%endif%}
                     </div>
                     <div class="comments_date" style="display: flex; justify-content: end">
                         <div class="button_and_date">
-                            {%if el.respond_text != 'default'%}
-                            <button class="btn btn-danger" type="submit" name="respond_comment" value="{{el.id}}"
-                                    style="background-color: transparent; border: none"><i
-                                    class="fa-solid fa-reply"></i></button>
+                            {%if el.respond_text == 'default'%}
+                            <i class="fa-solid fa-reply text-light" onclick="message_response()"></i>
                             {%endif%}
                             <h5 class="text-light">{{el.date_of_comment}}</h5>
                         </div>

@@ -1,5 +1,6 @@
 // function for hide None value tags in Lessons.html
 var count_click = 0
+var count = 0
 
 function hide_tags(){
     tag_0 = document.getElementsByClassName('tag')
@@ -11,7 +12,7 @@ function hide_tags(){
 }
 hide_tags()
 
-
+// block for opening comments block
 function comments(){
     count_click += 1
     if(count_click % 2 == 0){
@@ -23,4 +24,16 @@ function comments(){
         var arrow_down = document.getElementById('arrow_down').style.display = "none";
         var comments_block_up = document.getElementById('comments_container').style.display = "block";
     }
+}
+
+
+// funct for show response block on comment
+function message_response(){
+    count += 1
+    if (count % 2 == 0){
+        document.getElementById('response_div_id').style.display = 'block';
+    } else {
+        document.getElementById('response_div_id').style.display = 'none';
+    }
+
 }
