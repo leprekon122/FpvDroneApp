@@ -165,6 +165,12 @@ class LessonsPage(APIView):
         rewrite_video_btn = request.POST.get('rewrite_video_btn')
         rewrite_photo = request.POST.get("rewrite_photo")
         comment_btn = request.POST.get('comment_btn')
+        respond_comment = request.POST.get('respond_comment')
+
+        if respond_comment:
+            model = CommentsTableMain.objects.filter(id=respond_comment).update(respond_text='test_respond')
+            print(CommentsTableMain.objects.filter(id=respond_comment).values())
+
         if comment_btn:
             text = request.POST.get('comment_text')
             username = request.user

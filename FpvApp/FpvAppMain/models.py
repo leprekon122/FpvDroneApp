@@ -97,7 +97,9 @@ class CommentsTableMain(models.Model):
     text_of_comment = models.TextField(null=True, blank=True)
     date_of_comment = models.DateTimeField(auto_now=True, null=True, blank=True)
     which_lesson_topic = models.ForeignKey(LessonTopics, on_delete=models.CASCADE, null=True, blank=True)
+    respond_text = models.TextField(null=True, blank=True, default='default')
 
     class Meta:  # pylint: disable=too-few-public-methods
         verbose_name = "CommentsTableMain"
         verbose_name_plural = "CommentsTableMain"
+

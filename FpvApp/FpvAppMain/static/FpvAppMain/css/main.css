@@ -83,6 +83,21 @@ body {background-color: black;
 .comments_text {width: 100%}
 .comment {border-bottom: 1px solid #fff;
           }
+
+.comments_date {
+                display: flex:
+                justify-content: end;
+
+}
+
+.button_and_date {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content:space-between;
+                  width: 35%;
+                  padding-bottom: 3%;
+
+}
 /* ================== */
 
 /* lessons page css set */

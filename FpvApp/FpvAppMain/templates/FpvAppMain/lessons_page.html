@@ -43,21 +43,11 @@
             <div class="date_and_tags">
                 <form method="get">
                     <div class="tags">
-                        <button class="btn btn-warning tag text-light" id="tag_1" type="submit" name="tag_1"
-                                value="{{el.tag_1}}" style="background-color: transparent; border: none">{{el.tag_1}}
-                        </button>
-                        <button class="btn btn-warning tag text-light" id="tag_2" type="submit" name="tag_2"
-                                value="{{el.tag_2}}" style="background-color: transparent; border: none">{{el.tag_2}}
-                        </button>
-                        <button class="btn btn-warning tag text-light" id="tag_3" type="submit" name="tag_3"
-                                value="{{el.tag_3}}" style="background-color: transparent; border: none">{{el.tag_3}}
-                        </button>
-                        <button class="btn btn-warning tag text-light" id="tag_4" type="submit" name="tag_4"
-                                value="{{el.tag_4}}" style="background-color: transparent; border: none">{{el.tag_4}}
-                        </button>
-                        <button class="btn btn-warning tag text-light" id="tag_5" type="submit" name="tag_5"
-                                value="{{el.tag_5}}" style="background-color: transparent; border: none">{{el.tag_5}}
-                        </button>
+                        <button class="btn btn-warning tag text-light" id="tag_1" type="submit" name="tag_1" value="{{el.tag_1}}" style="background-color: transparent; border: none">{{el.tag_1}}</button>
+                        <button class="btn btn-warning tag text-light" id="tag_2" type="submit" name="tag_2" value="{{el.tag_2}}" style="background-color: transparent; border: none">{{el.tag_2}}</button>
+                        <button class="btn btn-warning tag text-light" id="tag_3" type="submit" name="tag_3" value="{{el.tag_3}}" style="background-color: transparent; border: none">{{el.tag_3}}</button>
+                        <button class="btn btn-warning tag text-light" id="tag_4" type="submit" name="tag_4" value="{{el.tag_4}}" style="background-color: transparent; border: none">{{el.tag_4}}</button>
+                        <button class="btn btn-warning tag text-light" id="tag_5" type="submit" name="tag_5" value="{{el.tag_5}}" style="background-color: transparent; border: none">{{el.tag_5}}</button>
                     </div>
                 </form>
                 <div class="date">
@@ -126,7 +116,7 @@
     <br>
     {%if model.0.pic != ''%}
     <div class="detail_pic">
-        <img src="media/{{model.0.pic}}" width="800px" height="400px">
+        <img src="media/{{model.0.pic}}" width="800px" height="400px" loading="lazy">
     </div>
     {%endif%}
     <br>
@@ -137,7 +127,7 @@
     {%endif%}
     {%if model.0.pic_1 != ''%}
     <div class="detail_pic">
-        <img src="media/{{model.0.pic_1}}" width="800px" height="400px">
+        <img src="media/{{model.0.pic_1}}" width="800px" height="400px" loading="lazy">
     </div>
     {%endif%}
     <br>
@@ -149,7 +139,7 @@
 
     {%if model.0.pic_2 != ''%}
     <div class="detail_pic">
-        <img src="media/{{model.0.pic_2}}" width="800px" height="400px">
+        <img src="media/{{model.0.pic_2}}" width="800px" height="400px" loading="lazy">
     </div>
     {%endif%}
     <br>
@@ -161,7 +151,7 @@
 
     {%if model.0.pic_3 != ''%}
     <div class="detail_pic">
-        <img src="media/{{model.0.pic_3}}" width="800px" height="400px">
+        <img src="media/{{model.0.pic_3}}" width="800px" height="400px" loading="lazy">
     </div>
     {%endif%}
     <br>
@@ -174,7 +164,7 @@
 
     {%if model.0.pic_4 != ''%}
     <div class="detail_pic">
-        <img src="media/{{model.0.pic_4}}" width="800px" height="400px">
+        <img src="media/{{model.0.pic_4}}" width="800px" height="400px" loading="lazy">
     </div>
     {%endif%}
     <br>
@@ -192,26 +182,53 @@
             {%csrf_token%}
             <div class="create_comments">
                 <label for="create_comment" class="text-light">Create comment</label>
-            <textarea class="form_control comments_text" name="comment_text" placeholder="create comment" id="create_comment">
+                <textarea class="form_control comments_text" name="comment_text" placeholder="create comment"
+                          id="create_comment">
             </textarea>
                 <br>
-                <button class="btn btn-success" style="background-color: transparent" type="submit" name="comment_btn" value="{{model.0.id}}">
+                <button class="btn btn-success" style="background-color: transparent" type="submit" name="comment_btn"
+                        value="{{model.0.id}}">
                     create comment
                 </button>
                 <br>
             </div>
         </form>
-        <div class="all_comments">
-            {%for el in all_comments%}
-            <div class="comment">
-                <p class="text_light">{{model.o.id}}</p>
-                <h1 class="text-light">{{el.user}}</h1>
-                <p class="text-light">{{el.text_of_comment}}</p>
-                <p class="text-light">{{el.date_of_comment}}</p>
+        <form method="post">
+            {%csrf_token%}
+            <div class="all_comments">
+                {%for el in all_comments%}
+                <div class="comment" style="width: 70%">
+                    <p class="text_light">{{model.o.id}}</p>
+                    <h1 class="text-light" style="display: flex; justify-content: center">{{el.user}}</h1>
+                    <div class="comment_text" style="padding: 3%">
+                        {% if el.respond_text != 'default' %}
+                        <div style="background-color: #7c8573; padding:1%">
+                            <h5 class="text-light" style="display: flex; justify-content: center">{{el.user}}</h5>
+                            <strong class="text-light">{{el.text_of_comment}}</strong>
+                            <h5 class="text-light" style="display: flex; justify-content: end">
+                                {{el.date_of_comment}}</h5>
+                        </div>
+                        <br>
+                        <p class="text-light">{{el.respond_text}}</p>
+                        {%elif el.respond_text == 'default' %}
+                        <p class="text-light">{{el.text_of_comment}}</p>
+                        {%endif%}
+                    </div>
+                    <div class="comments_date" style="display: flex; justify-content: end">
+                        <div class="button_and_date">
+                            {%if el.respond_text != 'default'%}
+                            <button class="btn btn-danger" type="submit" name="respond_comment" value="{{el.id}}"
+                                    style="background-color: transparent; border: none"><i
+                                    class="fa-solid fa-reply"></i></button>
+                            {%endif%}
+                            <h5 class="text-light">{{el.date_of_comment}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                {%endfor%}
             </div>
-            <br>
-            {%endfor%}
-        </div>
+        </form>
     </div>
 </div>
 
@@ -354,6 +371,14 @@
 {%if letters_status == 1%}
 <script>
         $('#letters').modal('show')
+
+
+
+
+
+
+
+
 
 </script>
 {%endif%}
