@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from .models import LessonTopics, TagsModel, Letters, CommentsTableMain
 from .views_logic import DetailInfo, SearchByTitle, FindByTagName, LettersLogic, DataForPage, CountLikes, \
-    LessonsPagePost, CreatingLetter, RewriteArticle, CreateComments
+    LessonsPagePost, CreatingLetter, RewriteArticle, CreateComments, CreateResponseComment
 from rest_framework import permissions
 
 
@@ -168,7 +168,16 @@ class LessonsPage(APIView):
         respond_comment = request.POST.get('respond_comment')
 
         if respond_comment:
-            CommentsTableMain.objects.filter(id=respond_comment).update(respond_text=request.POST.get('respond_text'))
+            text = request.POST.get('respond_text')
+            username = request.user
+            id_topic = CommentsTableMain.objects.filter(id=respond_comment).values("which_lesson_topic")[0][
+                'which_lesson_topic']
+            logic = CreateResponseComment(user=username, text=text, id_comment=respond_comment,
+                                          id_topic=id_topic)
+            logic.create_response_message
+            data = logic.data_set
+
+            return render(request, 'FpvAppMain/lessons_page.html', data)
 
         if comment_btn:
             text = request.POST.get('comment_text')

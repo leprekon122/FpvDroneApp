@@ -91,7 +91,7 @@ class Letters(models.Model):
 class CommentsTableMain(models.Model):
     """table  for comments"""
 
-    object = None
+    objects = None
 
     user = models.CharField(max_length=255, null=True, blank=True)
     text_of_comment = models.TextField(null=True, blank=True)

@@ -275,7 +275,7 @@ class CreateComments:
 
     @property
     def create_data_set(self):
-        """create_daya set for page"""
+        """create_data set for page"""
         data = {"model": LessonTopics.objects.filter(id=self.set_id),
                 "user": str(LessonTopics.objects.filter(id=self.set_id).values('author')[0]["author"]),
                 "flag": 1,
@@ -284,5 +284,34 @@ class CreateComments:
                 "current_user": self.username,
                 "all_comments": CommentsTableMain.objects.filter(
                     which_lesson_topic=LessonTopics.objects.filter(id=self.set_id)[0])
+                }
+        return data
+
+
+class CreateResponseComment:
+    """creating message response class"""
+
+    def __init__(self, user, text, id_comment, id_topic):
+        self.user = user
+        self.text = text
+        self.id_comment = id_comment
+        self.id_topic = id_topic
+
+    @property
+    def create_response_message(self):
+        """func for creating respond message """
+        CommentsTableMain.objects.filter(id=self.id_comment).update(respond_text=self.text)
+
+    @property
+    def data_set(self):
+        """create_data set for page"""
+        data = {"model": LessonTopics.objects.filter(id=self.id_topic),
+                "user": str(LessonTopics.objects.filter(id=self.id_topic).values('author')[0]["author"]),
+                "flag": 1,
+                "filter": 0,
+                "count_letters": len(Letters.objects.filter(status="unread")),
+                "current_user": self.user,
+                "all_comments": CommentsTableMain.objects.filter(
+                    which_lesson_topic=LessonTopics.objects.filter(id=self.id_topic).values()[0]['id'])
                 }
         return data
