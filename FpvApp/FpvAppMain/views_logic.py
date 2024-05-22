@@ -282,6 +282,7 @@ class CreateComments:
                 "filter": 0,
                 "count_letters": len(Letters.objects.filter(status="unread")),
                 "current_user": self.username,
+                "letters_model": Letters.objects.filter(destination=self.username).values(),
                 "all_comments": CommentsTableMain.objects.filter(
                     which_lesson_topic=LessonTopics.objects.filter(id=self.set_id)[0])
                 }
@@ -303,6 +304,18 @@ class CreateResponseComment:
         CommentsTableMain.objects.filter(id=self.id_comment).update(respond_text=self.text)
 
     @property
+    def create_ringing_letter(self):
+        """func for ringing obout  response message"""
+        take_name = LessonTopics.objects.filter(id=self.id_topic).values('author')[0]['author']
+        username = User.objects.filter(username=take_name).values()[0]['id']
+        # title = LessonTopics.objects.filter(id=self.id_topic).values('tittle')[0]['tittle']
+        Letters.objects.create(
+            title="respond on message in topic - ",
+            text=self.text,
+            destination_id=username,
+            whose=self.user)
+
+    @property
     def data_set(self):
         """create_data set for page"""
         data = {"model": LessonTopics.objects.filter(id=self.id_topic),
@@ -311,6 +324,7 @@ class CreateResponseComment:
                 "filter": 0,
                 "count_letters": len(Letters.objects.filter(status="unread")),
                 "current_user": self.user,
+                "letters_model": Letters.objects.filter(destination=self.user).values(),
                 "all_comments": CommentsTableMain.objects.filter(
                     which_lesson_topic=LessonTopics.objects.filter(id=self.id_topic).values()[0]['id'])
                 }

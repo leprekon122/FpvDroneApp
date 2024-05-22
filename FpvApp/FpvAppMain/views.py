@@ -41,7 +41,7 @@ class LessonsPage(APIView):
     """LessonsPage logic"""
 
     @staticmethod
-    def get(request):
+    def get(request):  # pylint: disable=too-few-public-methods
         """LessonsPage logic get req"""
 
         like = request.GET.get('like')
@@ -68,6 +68,7 @@ class LessonsPage(APIView):
             data = {"model": logic,
                     "flag": 1,
                     "filter": 0,
+                    "letters_model": Letters.objects.filter(destination=request.user).values(),
                     "count_letters": len(Letters.objects.filter(
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
                         status="unread"))
@@ -84,6 +85,7 @@ class LessonsPage(APIView):
             data = {"model": logic,
                     "flag": 1,
                     "filter": 0,
+                    "letters_model": Letters.objects.filter(destination=request.user).values(),
                     "count_letters": len(Letters.objects.filter(
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
                         status="unread"))
@@ -119,6 +121,7 @@ class LessonsPage(APIView):
                     "tags": TagsModel.objects.all().values(),
                     "flag": 0,
                     "filter": 0,
+                    "letters_model": Letters.objects.filter(destination=request.user).values(),
                     "count_letters": len(Letters.objects.filter(
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
                         status="unread"))
@@ -148,6 +151,7 @@ class LessonsPage(APIView):
                         destination_id=User.objects.filter(username=request.user).values('id')[0]['id'],
                         status="unread")),
                     "current_user": str(request.user),
+                    "letters_model": Letters.objects.filter(destination=request.user).values(),
                     "all_comments": CommentsTableMain.objects.filter(which_lesson_topic=detail_info).values()
                     }
             return render(request, 'FpvAppMain/lessons_page.html', data)
@@ -174,7 +178,8 @@ class LessonsPage(APIView):
                 'which_lesson_topic']
             logic = CreateResponseComment(user=username, text=text, id_comment=respond_comment,
                                           id_topic=id_topic)
-            logic.create_response_message
+            logic.create_response_message  # creating respond
+            logic.create_ringing_letter  # creating ringing about new message
             data = logic.data_set
 
             return render(request, 'FpvAppMain/lessons_page.html', data)
