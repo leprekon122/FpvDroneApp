@@ -1,9 +1,15 @@
+var count_filter_panel = 0
+
 function show_article(){
+    try {
     var url = window.location.href
     if (url == 'http://127.0.0.1:8000/lessons_page'){
         document.getElementById('article_configurator').style.display = 'block';
     } else {
         document.getElementById('article_configurator').style.display = 'none';
+    }
+    } catch {
+        console.log('something went wrong')
     }
 }
 show_article()
@@ -168,3 +174,18 @@ function fifth_cube() {
     text.style.justifyContent = "end"
     text.style.padding = "2%"
 }
+
+
+function show_menu() {
+    count_filter_panel += 1
+    let width = screen.width;
+
+        if(count_filter_panel % 2 == 1){
+            console.log(width)
+            console.log('left')
+            document.getElementById('lesson_filters').style.left = "5px";
+        } else {
+            console.log('right')
+            document.getElementById('lesson_filters').style.left = "-450px";
+        }
+   }

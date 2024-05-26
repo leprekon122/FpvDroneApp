@@ -41,10 +41,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'main_page'%}" >Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link active" href="{%url 'lessons_page'%}" >Lessons</a>
+            <a class="nav-item nav-link active" href="{% url 'main_page'%}">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="{%url 'lessons_page'%}">Lessons</a>
             <a class="nav-item nav-link active" data-target="#article" data-toggle="modal" id="article_configurator"
                style="display: none;">Article configurator</a>
+            <a class="nav-item nav-link active" id="menu_btn" onclick="show_menu()">Menu</a>
         </div>
         <div class="navbar-nav tools_panel">
             <a class="nav-item nav-link" href="" data-target="#letters" data-toggle="modal"><i
@@ -95,14 +96,21 @@
                     <form method="post">
                         {%csrf_token%}
                         <div class="write">
-                            <input class="form-control" type="text" placeholder="title" name="title_letters">
+                            <input class="form-control text-light" type="text" placeholder="title" name="title_letters"
+                                   style="background-color: black">
                             <br>
-                            <textarea class="form-control" rows="6" name="text_letters" placeholder="message">
+                            <textarea class="form-control text-light" rows="6" name="text_letters" placeholder="message"
+                                      style="background-color:black">
                             </textarea>
                             <br>
-                            <input type="text" class="form-control" name="username" placeholder="username">
+                            <input type="text" class="form-control text-light" name="username" placeholder="username"
+                                   style="background-color:black">
                             <br>
-                            <button class="btn btn-success" type="submit" name="send_letters" value="send_letters">send</button>
+                            <button class="btn btn-success"
+                                    style="background-color: transparent; border-radius: 95%; border-right: 4px solid yellow; border-bottom: 2px solid yellow; border-left: none; border-top: none"
+                                    type="submit" name="send_letters" value="send_letters">
+                                send
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -126,7 +134,8 @@
                 {%csrf_token%}
                 <div class="modal-body article-body">
                     <label for="title" class="text-light">Title article</label>
-                    <input class="form-control" type="text" name="title" id="title">
+                    <input class="form-control text-light" type="text" name="title" id="title"
+                           style="background-color:black">
                     <div class="num_of_photo">
                         <div class="num_of_photo_title">
                             <p>quan of photo</p>
@@ -205,26 +214,32 @@
                     </div>
                     <div class="add_date">
                         <label for="add_date" class="text-light">date</label>
-                        <input class="form-control" type="date" name="add_date" id="add_date">
+                        <input class="form-control text-light" type="date" name="add_date" id="add_date"
+                               style="background-color:black">
                     </div>
                     <div class="add_video">
                         <input type="file" name="video">
                     </div>
                     <div class="add_text">
                         <label for="text" class="text-light">text</label>
-                        <textarea class="form-control"  name="text" id="text" style="height: 300px" rows="5">
+                        <textarea class="form-control text-light" name="text" id="text"
+                                  style="height: 300px; background-color: black" rows="5">
                         </textarea>
                         <label for="text_1" class="text-light">text_1</label>
-                        <textarea class="form-control"  name="text_1" id="text_1" style="height: 300px" rows="5">
+                        <textarea class="form-control text-light" name="text_1" id="text_1"
+                                  style="height: 300px; background-color: black" rows="5">
                         </textarea>
                         <label for="text_2" class="text-light">text_2</label>
-                        <textarea class="form-control"  name="text_2" id="text_2" style="height: 300px" rows="5">
+                        <textarea class="form-control text-light" name="text_2" id="text_2"
+                                  style="height: 300px; background-color: black" rows="5">
                         </textarea>
                         <label for="text_3" class="text-light">text_3</label>
-                        <textarea class="form-control"  name="text_3" id="text_3" style="height: 300px" rows="5">
+                        <textarea class="form-control text-light" name="text_3" id="text_3"
+                                  style="height: 300px; background-color: black" rows="5">
                         </textarea>
                         <label for="text_4" class="text-light">text_4</label>
-                        <textarea class="form-control"  name="text_4" id="text_4" style="height: 300px" rows="5">
+                        <textarea class="form-control text-light" name="text_4" id="text_4"
+                                  style="height: 300px; background-color: black" rows="5">
                         </textarea>
                     </div>
                     <div class="choosing_tags">
@@ -278,7 +293,7 @@
 
                         <div style="width: 20%;">
                             <label for="tag_5" class="text-light">tag_5</label>
-                            <select class="form-control" name="tag_5" id="tag_5" >
+                            <select class="form-control" name="tag_5" id="tag_5">
                                 <option value="None"></option>
                                 <option value="repair">repair</option>
                                 <option value="video">video</option>
@@ -290,7 +305,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button name="save_article" value="save_article" type="submit" class="btn btn-danger" style="width: 100%; background-color: transparent;">
+                    <button name="save_article" value="save_article" type="submit" class="btn btn-danger"
+                            style="background-color: transparent; border-radius: 95%; border-right: 4px solid yellow; border-bottom: 2px solid yellow; border-left: none; border-top: none">
                         Save changes
                     </button>
                 </div>

@@ -3,11 +3,15 @@ var count_click = 0
 var count = 0
 
 function hide_tags(){
+    try{
     tag_0 = document.getElementsByClassName('tag')
     for (el = 0; el <= tag_0.length; el ++){
         if(tag_0[el].innerHTML == 'None'){
             tag_0[el].style.display = 'none';
         }
+    }
+    } catch {
+        console.log('something went wrong')
     }
 }
 hide_tags()
