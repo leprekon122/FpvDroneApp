@@ -189,3 +189,12 @@ function show_menu() {
             document.getElementById('lesson_filters').style.left = "-450px";
         }
    }
+
+
+function show_menu(){
+    var url = window.location.href
+    if(url != "http://127.0.0.1:8000/lessons_page"){
+        document.getElementById('menu_btn').style.display = 'none'
+    }
+}
+show_menu()
