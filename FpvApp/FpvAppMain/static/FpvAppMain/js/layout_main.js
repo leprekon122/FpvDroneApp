@@ -176,25 +176,23 @@ function fifth_cube() {
 }
 
 
+
 function show_menu() {
     count_filter_panel += 1
     let width = screen.width;
 
         if(count_filter_panel % 2 == 1){
-            console.log(width)
-            console.log('left')
             document.getElementById('lesson_filters').style.left = "5px";
         } else {
-            console.log('right')
             document.getElementById('lesson_filters').style.left = "-450px";
         }
    }
 
 
-function show_menu(){
+function show_menu_btn(){
     var url = window.location.href
     if(url != "http://127.0.0.1:8000/lessons_page"){
         document.getElementById('menu_btn').style.display = 'none'
     }
 }
-show_menu()
+show_menu_btn()

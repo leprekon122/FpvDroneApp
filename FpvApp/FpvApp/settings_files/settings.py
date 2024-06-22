@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'FpvAppMain',
 
     'rest_framework',
+
+
 ]
 
 MIDDLEWARE = [
@@ -51,7 +53,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'FpvApp.urls'
+
 
 TEMPLATES = [
     {

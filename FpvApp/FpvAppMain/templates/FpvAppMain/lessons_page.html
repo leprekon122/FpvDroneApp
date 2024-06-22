@@ -28,9 +28,20 @@
                 </button>
             </form>
         </div>
+        <br>
+        <form method="get">
+            {%csrf_token%}
+        <div class="find_by_date">
+            <input class="form-control" type="date" name="date">
+            <br>
+            <button class="btn btn-warning" type="submit" name="date_btn" value="date_btn" >search</button>
+        </div>
+        </form>
+
 
     </div>
     <div class="topics_main">
+        {% if model|length > 0  %}
         {%for el in model%}
         <div class="topics">
             <form method="get">
@@ -57,6 +68,11 @@
         </div>
         </br>
         {%endfor%}
+        {%else%}
+            <div class="no_data">
+                <h5 class="text-light">No any data</h5>
+            </div>
+        {%endif%}
     </div>
 </div>
 {%else%}
@@ -223,7 +239,7 @@
                     <div class="comments_date" style="display: flex; justify-content: end">
                         <div class="button_and_date">
                             {%if el.respond_text == 'default'%}
-                            <i class="fa-solid fa-reply text-light" id="respond_open" onclick="message_response()"></i>
+                            <i class="fa-solid fa-reply text-light" id="respond_open" onclick="message_response()"></i>ƒ
                             {%endif%}
                             <h5 class="text-light">{{el.date_of_comment}}</h5>
                         </div>

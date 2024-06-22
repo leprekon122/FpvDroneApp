@@ -167,6 +167,12 @@ body {background-color: black;
                      padding: 10px;
                     }
 
+.find_by_date{
+              border-bottom: 1px solid yellow;
+              padding: 20px;
+}
+
+.find_by_date button {width: 100%;}
 
 .topics_main  {width: 90%;
                height: 90vh;
@@ -174,12 +180,21 @@ body {background-color: black;
                padding: 2%;
 
                }
+
 .topics {
 
          height: 20vh;
          box-shadow: 10px 5px 5px yellow;
          padding: 2%;
          border-radius: 3%;
+}
+
+
+.no_data {
+          height: 90vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
 }
 
 .title {display: flex;
@@ -531,6 +546,24 @@ body {background-color: black;
   .detail_pic img{width: 350px}
 
 
+  .find_by_title {
+                  background-color: black
+  }
+
+  .dark {
+         display: flex;
+         justify-content:center;
+         padding:3%;
+         font-size: 15px
+  }
+
+  .light {
+        width: 100%;
+        height: 35vh;
+        text-align: -webkit-center;
+    }
+
+
 
  .detail_container {
    border-left: none;
@@ -558,22 +591,28 @@ body {background-color: black;
  .topics_main {
                position: fixed;
                width: 100%;
+               padding:5%;
+
 
  }
+
+
 
  .lesson_filters {
                   position: relative;
                   width: 100%;
                   z-index: 2;
                   left: -450px;
-                  height: 25vh;
-                  filter: drop-shadow(16px 16px 20px red) invert(75%);
+                  max-height: 75vh;
+                  filter: none;
+                  background-color: black;
 
  }
 
 
  .button_and_date {
                    width: 45%:
+
  }
 
  #comment_btn  {width: 100%}
@@ -598,6 +637,8 @@ body {background-color: black;
                   font-size: 10px;
 
  }
+
+
 
  .comments_container {
                       display: flex;

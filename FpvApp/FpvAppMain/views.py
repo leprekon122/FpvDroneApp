@@ -1,19 +1,19 @@
 """import block"""
 import random
 
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from .models import LessonTopics, TagsModel, Letters, CommentsTableMain
 from .views_logic import DetailInfo, SearchByTitle, FindByTagName, LettersLogic, DataForPage, CountLikes, \
-    LessonsPagePost, CreatingLetter, RewriteArticle, CreateComments, CreateResponseComment
+    LessonsPagePost, CreatingLetter, RewriteArticle, CreateComments, CreateResponseComment, SearchByDate
 from rest_framework import permissions
 
 
 def login_page(request):
     """Login page logic"""
-
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
@@ -58,6 +58,13 @@ class LessonsPage(APIView):
         tag_4 = request.GET.get('tag_4')
         tag_5 = request.GET.get('tag_5')
         # ===================
+
+        search_by_date = request.GET.get('date_btn')
+
+        if search_by_date:
+            date = request.GET.get('date')
+            logic = SearchByDate(date=date, username=request.user)
+            return render(request, 'FpvAppMain/lessons_page.html', logic.create_data_set)
 
         if dislike:
             id_topic = dislike.split()[1]

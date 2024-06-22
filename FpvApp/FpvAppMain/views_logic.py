@@ -55,6 +55,32 @@ class FindByTagName:  # pylint: disable=too-few-public-methods
         return "Search_by_tag"
 
 
+class SearchByDate:
+    """Class for searching posts by date on lesson_page.html"""
+
+    def __init__(self, date, username):
+        self.date = date
+        self.username = username
+
+    @property
+    def make_query(self):
+        """def for making query by date"""
+        model = LessonTopics.objects.filter(add_date__icontains=self.date).values()
+        return model
+
+    @property
+    def create_data_set(self):
+        """making data_set for page"""
+        data = {"model": LessonTopics.objects.filter(add_date__icontains=self.date).values(),
+                "flag": 0,
+                "filter": 0,
+                "count_letters": len(Letters.objects.filter(status="unread")),
+                "current_user": self.username,
+                "letters_model": Letters.objects.filter(destination=self.username).values(),
+                }
+        return data
+
+
 class LettersLogic:
     """letters  logic class"""
 
@@ -325,7 +351,5 @@ class CreateResponseComment:
                 "count_letters": len(Letters.objects.filter(status="unread")),
                 "current_user": self.user,
                 "letters_model": Letters.objects.filter(destination=self.user).values(),
-                "all_comments": CommentsTableMain.objects.filter(
-                    which_lesson_topic=LessonTopics.objects.filter(id=self.id_topic).values()[0]['id'])
                 }
         return data
