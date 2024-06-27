@@ -1,5 +1,6 @@
 """import block"""
 import random
+import requests
 
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -8,7 +9,7 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from .models import LessonTopics, TagsModel, Letters, CommentsTableMain
 from .views_logic import DetailInfo, SearchByTitle, FindByTagName, LettersLogic, DataForPage, CountLikes, \
-    LessonsPagePost, CreatingLetter, RewriteArticle, CreateComments, CreateResponseComment, SearchByDate
+    LessonsPagePost, CreatingLetter, RewriteArticle, CreateComments, CreateResponseComment, SearchByDate, GetInfoFromIp
 from rest_framework import permissions
 
 
@@ -33,7 +34,12 @@ class MainPage(APIView):
         logic_set = DataForPage(request.user)
         data = logic_set.data()
 
-        return render(request, 'FpvAppMain/main_page.html', data)
+        #ip = request.META.get('REMOTE_ADDR')
+        ip = '85.209.89.166'
+        api_logic = GetInfoFromIp(ip)
+        print(api_logic.make_req_ip)
+
+        return render(request, 'FpvAppMain/main_page.html', {'data': data, 'api_data': api_logic.make_req_ip})
 
 
 class LessonsPage(APIView):
@@ -43,6 +49,9 @@ class LessonsPage(APIView):
     @staticmethod
     def get(request):  # pylint: disable=too-few-public-methods
         """LessonsPage logic get req"""
+
+        x_forwarded_for = request.META.get('REMOTE_ADDR')
+        print(x_forwarded_for)
 
         like = request.GET.get('like')
         dislike = request.GET.get('dislike')

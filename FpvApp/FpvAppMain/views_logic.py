@@ -1,6 +1,6 @@
 """import block"""
+import requests
 from django.contrib.auth.models import User
-from django.db.models import Q
 from .models import LessonTopics, TagsModel, Letters, CommentsTableMain
 
 
@@ -353,3 +353,17 @@ class CreateResponseComment:
                 "letters_model": Letters.objects.filter(destination=self.user).values(),
                 }
         return data
+
+
+class GetInfoFromIp:
+    """class for working ip info api"""
+
+    def __init__(self, ip):
+        self.ip = ip
+        self.api_ip_url = f"https://ipinfo.io/{self.ip}/json"
+
+    @property
+    def make_req_ip(self):
+        """making request func"""
+        req = requests.get(self.api_ip_url)
+        return req.json()

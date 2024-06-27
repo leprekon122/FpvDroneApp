@@ -8,7 +8,17 @@ body {background-color: black;
 #menu_btn {
            display: none;
 }
+.map_and_data {
+               display: flex;
+               justify-content:  column;
+               height: 45vh;
 
+#map {
+            height: 200px;
+            width: 350px;
+        }
+
+}
 .nav-link:hover {
                  box-shadow: 2px 3px 3px yellow;
                  border-radius: 95%;
@@ -347,6 +357,12 @@ body {background-color: black;
               flex-direction: column;
               height:95vh;
               }
+
+.map_and_animation {
+              display: flex;
+              flex-direction: row;
+              height:90vh;
+}
 
 .second_slide {
     display: flex;

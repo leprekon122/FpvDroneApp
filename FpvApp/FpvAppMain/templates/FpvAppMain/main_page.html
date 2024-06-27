@@ -8,27 +8,40 @@
         <div class="dark">
             <h1 class="text-light">Start you career here with us!</h1>
         </div>
+        <div class="map_and_animation">
+            <div class="light">
+                <div class="bomb_top">
+                    <i class="fa-solid fa-bomb" style=" font-size: 25px"></i>
+                    <br>
+                    <i class="fa-solid fa-bomb" style=" font-size: 23px"></i>
+                    <br>
+                    <i class="fa-solid fa-bomb" style=" font-size: 28px"></i>
+                    <br>
+                    <i class="fa-solid fa-bomb" style=" font-size: 21px"></i>
+                </div>
+                <div class="img_class" style="z-index: 1">
+                    <img src="http://127.0.0.1:8000/static/FpvAppMain/img/drone_1.png" width="100%">
+                </div>
+                <br>
+                <div class="bomb_button">
+                    <i class="fa-solid fa-bomb" style="font-size: 30px"></i>
+                    <i class="fa-solid fa-bomb" style="font-size: 38px"></i>
+                    <i class="fa-solid fa-bomb" style="font-size: 25px"></i>
+                    <i class="fa-solid fa-bomb" style="font-size: 45px"></i>
+                    <i class="fa-solid fa-bomb" style="font-size: 32px"></i>
+                </div>
+            </div>
 
-        <div class="light">
-            <div class="bomb_top">
-                <i class="fa-solid fa-bomb" style=" font-size: 25px"></i>
-                <br>
-                <i class="fa-solid fa-bomb" style=" font-size: 23px"></i>
-                <br>
-                <i class="fa-solid fa-bomb" style=" font-size: 28px"></i>
-                <br>
-                <i class="fa-solid fa-bomb" style=" font-size: 21px"></i>
-            </div>
-            <div class="img_class" style="z-index: 1">
-                <img src="http://127.0.0.1:8000/static/FpvAppMain/img/drone_1.png" width="100%">
-            </div>
-            <br>
-            <div class="bomb_button">
-                <i class="fa-solid fa-bomb" style="font-size: 30px"></i>
-                <i class="fa-solid fa-bomb" style="font-size: 38px"></i>
-                <i class="fa-solid fa-bomb" style="font-size: 25px"></i>
-                <i class="fa-solid fa-bomb" style="font-size: 45px"></i>
-                <i class="fa-solid fa-bomb" style="font-size: 32px"></i>
+            <div class="map_and_data">
+                <div id="map"></div>
+                <div>
+                    <span class="text-warning">ip: <p class="text-light" id="api_data_ip">{{api_data.ip}}</p></span>
+                    <span class="text-warning">location: <p class="text-light" id="api_data_loc">{{api_data.loc}}</p></span>
+                    <span class="text-warning">city: <p class="text-light">{{api_data.city}}</p></span>
+                    <span class="text-warning">country: <p class="text-light">{{api_data.country}}</p></span>
+                    <span class="text-warning">region: <p class="text-light">{{api_data.region}}</p></span>
+                    <span class="text-warning">org: <p class="text-light">{{api_data.org}}</p></span>
+                </div>
             </div>
         </div>
 
