@@ -34,10 +34,8 @@ class MainPage(APIView):
         logic_set = DataForPage(request.user)
         data = logic_set.data()
 
-        #ip = request.META.get('REMOTE_ADDR')
-        ip = '85.209.89.166'
+        ip = request.META.get('REMOTE_ADDR')
         api_logic = GetInfoFromIp(ip)
-        print(api_logic.make_req_ip)
 
         return render(request, 'FpvAppMain/main_page.html', {'data': data, 'api_data': api_logic.make_req_ip})
 
