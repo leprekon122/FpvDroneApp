@@ -589,7 +589,7 @@ body {background-color: black;
   .map_and_data {
                display: flex;
                flex-direction: column;
-               height: 45vh;
+               height: 65vh;
                padding: 1%;
                 }
     .ip_data {
