@@ -7,6 +7,7 @@ function GetMap() {
             var map = new Microsoft.Maps.Map('#map', {
                 credentials: 'YOUR_BING_MAPS_KEY',
                 center: new Microsoft.Maps.Location(parseInt(api_data_loc[0],10), parseInt(api_data_loc[1],10)),
+                mapTypeId: Microsoft.Maps.MapTypeId.aerial,
                 zoom: 8
             });
 

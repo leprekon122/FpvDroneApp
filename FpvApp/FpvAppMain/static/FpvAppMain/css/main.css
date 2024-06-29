@@ -10,12 +10,21 @@ body {background-color: black;
 }
 .map_and_data {
                display: flex;
-               justify-content:  column;
+               flex-direction: column;
                height: 45vh;
+               padding: 1%;
+                }
+.ip_data {
+          display:flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          width: 50%;
+          justify-content: space-between
+}
 
 #map {
-            height: 200px;
-            width: 350px;
+            height: 80%;
+            width: 100%;
         }
 
 }
@@ -566,11 +575,41 @@ body {background-color: black;
                   background-color: black
   }
 
-  .dark {
+  .light {display: none}
+  .ip_data {
+            display:flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-between
+  }
+  .second_slide {display: none}
+
+
+  .map_and_data {
+               display: flex;
+               flex-direction: column;
+               height: 45vh;
+               padding: 1%;
+                }
+    .ip_data {
+              display:flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+              width: 50%;
+              justify-content: space-between
+    }
+
+    #map {
+                height: 80%;
+                width: 100%;
+            }
+
+  .dark h1{
          display: flex;
          justify-content:center;
-         padding:3%;
-         font-size: 15px
+         padding:5%;
+         font-size: 20px
   }
 
   .light {
