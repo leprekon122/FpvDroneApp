@@ -27,6 +27,7 @@ def login_page(request):
     return render(request, "FpvAppMain/start_page.html")
 
 
+
 class MainPage(APIView):
     """Main page logic"""
 
