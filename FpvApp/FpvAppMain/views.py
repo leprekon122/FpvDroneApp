@@ -1,8 +1,4 @@
 """import block"""
-import random
-import requests
-
-from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
@@ -13,6 +9,7 @@ from .views_logic import DetailInfo, SearchByTitle, FindByTagName, LettersLogic,
 from rest_framework import permissions
 
 
+
 def login_page(request):
     """Login page logic"""
     username = request.POST.get('username')
@@ -20,7 +17,12 @@ def login_page(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        return render(request, "FpvAppMain/main_page.html")
+        logic_set = DataForPage(request.user)
+        ip = request.META.get('REMOTE_ADDR')
+        api_logic = GetInfoFromIp(ip)
+        data = logic_set.data()
+
+        return render(request, "FpvAppMain/main_page.html", {'data': data, 'api_data': api_logic.make_req_ip})
 
     return render(request, "FpvAppMain/start_page.html")
 
@@ -34,8 +36,7 @@ class MainPage(APIView):
         logic_set = DataForPage(request.user)
         data = logic_set.data()
 
-        #ip = request.META.get('REMOTE_ADDR')
-        ip = '85.209.89.166'
+        ip = request.META.get('REMOTE_ADDR')
         api_logic = GetInfoFromIp(ip)
 
         return render(request, 'FpvAppMain/main_page.html', {'data': data, 'api_data': api_logic.make_req_ip})
